@@ -152,6 +152,7 @@ def processar_pasta(pasta):
 
     df = pd.DataFrame(dados)
     df.to_csv('dados_{}.csv'.format(pasta))
+    print('\tDone processing folder \'{}\''.format(pasta))
 
 
 if __name__ == '__main__':
@@ -168,7 +169,7 @@ if __name__ == '__main__':
     if threaded:
         num_pastas = len(pastas)
         p = Pool(num_pastas)
-        print(p.map(processar_pasta, pastas))
+        p.map(processar_pasta, pastas)
     else:
         for pasta in pastas:
             processar_pasta(pasta)
