@@ -100,6 +100,7 @@ def entradas_conforto(file, zona):
 
 
 def processar_pasta(pasta):
+    # os.chdir(BASE_DIR+'\\'+pasta)  # ugly looking mess for windows users
     os.chdir(BASE_DIR+'/'+pasta)
     files = os.listdir(os.getcwd())
     files.sort()
@@ -162,7 +163,7 @@ if __name__ == '__main__':
         print('\t{}'.format(pasta))
 
     threaded = True
-    threaded = False
+    # threaded = False
 
     if threaded:
         num_pastas = len(pastas)
