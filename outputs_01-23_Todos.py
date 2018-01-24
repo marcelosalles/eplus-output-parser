@@ -7,30 +7,13 @@ import os
 import pandas as pd
 import csv
 import glob
+from multiprocessing import Pool
 
-dir = os.getcwd()
+BASE_DIR = os.getcwd()
+ZONAS = ['1', '2', '3', 'SALA']
 
-# A lista pastas deve ser atualizada de acordo com os nomes das cidades simuladas
-#pastas = ['BeloHorizonte', 'FozdoIguacu', 'Goiania', 'Niteroi', 'RiodeJaneiro'] 
-pastas = glob.glob('_*')
 
-zonas = ['1', '2', '3', 'SALA']
-
-dados = {}
-
-dados['pasta'] = []
-dados['arquivo'] = []
-dados['zona'] = []
-dados['heating'] = []
-dados['cooling'] = []
-dados['menor16'] = []
-dados['entre16e18'] = []
-dados['entre18e23'] = []
-dados['entre23e26'] = []
-dados['maior26'] = []
-dados['timesteps'] = []
-
-def take_idf(files):
+def filter_idf_files(files):
     idf_files = []
 
     for file in files:
@@ -39,7 +22,8 @@ def take_idf(files):
 
     return idf_files
 
-def horasConforto(file,zona):
+
+def entradas_conforto(file, zona):
     
     menor16 = 0
     entre16e18 = 0
@@ -48,7 +32,6 @@ def horasConforto(file,zona):
     maior26 = 0
     timesteps = 0
 
-    
     if zona == 'SALA':
 
         try:
@@ -113,41 +96,47 @@ def horasConforto(file,zona):
         except:
             maior26 = 0
     
-    return(menor16,entre16e18,entre18e23,entre23e26,maior26,timesteps)
+    return [menor16, entre16e18, entre18e23, entre23e26, maior26, timesteps]
 
 
-for pasta in pastas:
-
-    os.chdir(dir+'\\'+pasta)
+def processar_pasta(pasta):
+    # os.chdir(BASE_DIR+'\\'+pasta)  # ugly looking mess for windows users
+    os.chdir(BASE_DIR+'/'+pasta)
     files = os.listdir(os.getcwd())
     files.sort()
-    idf_files = take_idf(files)
+    idf_files = filter_idf_files(files)
+
+    dados = {}
+    dados['pasta'] = []
+    dados['arquivo'] = []
+    dados['zona'] = []
+    dados['heating'] = []
+    dados['cooling'] = []
+    dados['menor16'] = []
+    dados['entre16e18'] = []
+    dados['entre18e23'] = []
+    dados['entre23e26'] = []
+    dados['maior26'] = []
+    dados['timesteps'] = []
 
     for file in idf_files:
         
         print(file)
+        openfile = pd.read_csv(file[:-4]+'.csv')
         
-        file = file[:-4]
-        openfile = pd.read_csv(file+'.csv')
-        
-        for zona in zonas:
+        for zona in ZONAS:
             
             if zona == 'SALA':
-                
                 heatingkey = (zona + ' IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Heating Energy [J](TimeStep)')
-            else:
-                heatingkey = ('DORM'+zona + ' IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Heating Energy [J](TimeStep)')
-            heatingIdealLoads = sum(openfile[heatingkey])
-                
-            if zona == 'SALA':
-                
                 coolingkey = (zona + ' IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Cooling Energy [J](TimeStep)')
             else:
+                heatingkey = ('DORM'+zona + ' IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Heating Energy [J](TimeStep)')
                 coolingkey = ('DORM'+zona + ' IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Cooling Energy [J](TimeStep)')
-            
+
+            heatingIdealLoads = sum(openfile[heatingkey])
             coolingIdealLoads = sum(openfile[coolingkey])
                 
-            horas = horasConforto(openfile,zona) # fracao de horas
+            horas = entradas_conforto(openfile, zona)  # fracao de horas
                 
             dados['pasta'].append(pasta)
             dados['arquivo'].append(file)
@@ -160,10 +149,27 @@ for pasta in pastas:
             dados['entre23e26'].append(horas[3])
             dados['maior26'].append(horas[4])
             dados['timesteps'].append(horas[5])
-        
-#print(dados)
 
-os.chdir(dir)
-df = pd.DataFrame(dados)
+    df = pd.DataFrame(dados)
+    df.to_csv('dados_{}.csv'.format(pasta))
+    print('\tDone processing folder \'{}\''.format(pasta))
 
-df.to_csv('dados.csv')
+
+if __name__ == '__main__':
+    # pastas = ['BeloHorizonte', 'FozdoIguacu', 'Goiania', 'Niteroi', 'RiodeJaneiro']
+    pastas = glob.glob('_*')
+
+    print('Processing {} folders in \'{}\':'.format(len(pastas), BASE_DIR))
+    for pasta in pastas:
+        print('\t{}'.format(pasta))
+
+    threaded = True
+    # threaded = False
+
+    if threaded:
+        num_pastas = len(pastas)
+        p = Pool(num_pastas)
+        p.map(processar_pasta, pastas)
+    else:
+        for pasta in pastas:
+            processar_pasta(pasta)
