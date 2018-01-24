@@ -1,0 +1,2657 @@
+!- Generated with pyidf version 0.2.1, generation date: 2018-01-19 13:17:17.243000
+!- Validation level: no
+
+!- Previous comments:
+
+!-Generator IDFEditor 1.50
+!-Option SortedOrder
+!-NOTE: All comments with '!-' are ignored by the IDFEditor and are generated automatically.
+!-      Use '!' comments if they need to be retained when using the IDFEditor.
+!-   ===========  ALL OBJECTS IN CLASS: VERSION ===========
+
+!-   ===========  ALL OBJECTS OF GROUP: Simulation Parameters  ===========
+
+  Version,8.8;
+
+  SimulationControl,
+    Yes,                     !- Do Zone Sizing Calculation 
+    No,                      !- Do System Sizing Calculation 
+    No,                      !- Do Plant Sizing Calculation 
+    No,                      !- Run Simulation for Sizing Periods 
+    Yes;                     !- Run Simulation for Weather File Run Periods 
+
+  Timestep,6;
+
+  Building,
+    caso_0005.idf,           !- Name 
+    0.0,                     !- North Axis {deg}
+    City,                    !- Terrain 
+    0.5,                     !- Loads Convergence Tolerance Value 
+    0.5,                     !- Temperature Convergence Tolerance Value {deltaC}
+    FullInteriorAndExterior,  !- Solar Distribution 
+    ,                        !- Maximum Number of Warmup Days 
+    ;                        !- Minimum Number of Warmup Days 
+
+!-   ===========  ALL OBJECTS OF GROUP: Location and Climate  ===========
+
+  SizingPeriod:WeatherFileDays,
+    ano,                     !- Name 
+    1,                       !- Begin Month 
+    1,                       !- Begin Day of Month 
+    12,                      !- End Month 
+    31,                      !- End Day of Month 
+    Monday,                  !- Day of Week for Start Day 
+    No,                      !- Use Weather File Daylight Saving Period 
+    No;                      !- Use Weather File Rain and Snow Indicators 
+
+  RunPeriod,
+    Ano,                     !- Name 
+    1,                       !- Begin Month 
+    1,                       !- Begin Day of Month 
+    12,                      !- End Month 
+    31,                      !- End Day of Month 
+    UseWeatherFile,          !- Day of Week for Start Day 
+    No,                      !- Use Weather File Holidays and Special Days 
+    No,                      !- Use Weather File Daylight Saving Period 
+    No,                      !- Apply Weekend Holiday Rule 
+    No,                      !- Use Weather File Rain Indicators 
+    No,                      !- Use Weather File Snow Indicators 
+    1;                       !- Number of Times Runperiod to be Repeated 
+
+  Site:GroundTemperature:BuildingSurface,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0;
+
+  Site:GroundReflectance,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2;
+
+!-   ===========  ALL OBJECTS OF GROUP: Schedules  ===========
+
+  ScheduleTypeLimits,
+    fraction,                !- Name 
+    0.0,                     !- Lower Limit Value 
+    1.0,                     !- Upper Limit Value 
+    Continuous;              !- Numeric Type 
+
+  ScheduleTypeLimits,
+    qualquer,                !- Name 
+    -100.0,                  !- Lower Limit Value 
+    1000.0,                  !- Upper Limit Value 
+    Continuous;              !- Numeric Type 
+
+  ScheduleTypeLimits,
+    TEMPERATURE,             !- Name 
+    0.0,                     !- Lower Limit Value 
+    50.0,                    !- Upper Limit Value 
+    Continuous,              !- Numeric Type 
+    Temperature;             !- Unit Type 
+
+  ScheduleTypeLimits,
+    On_Off,                  !- Name 
+    0.0,                     !- Lower Limit Value 
+    1.0,                     !- Upper Limit Value 
+    Discrete,                !- Numeric Type 
+    Control;                 !- Unit Type 
+
+  ScheduleTypeLimits,
+    fracao,                  !- Name 
+    0.0,                     !- Lower Limit Value 
+    1.0,                     !- Upper Limit Value 
+    Continuous,              !- Numeric Type 
+    Percent;                 !- Unit Type 
+
+  ScheduleTypeLimits,
+    atividade,               !- Name 
+    0.0,                     !- Lower Limit Value 
+    1000.0,                  !- Upper Limit Value 
+    Continuous,              !- Numeric Type 
+    ActivityLevel;           !- Unit Type 
+
+  ScheduleTypeLimits,
+    control,                 !- Name 
+    0.0,                     !- Lower Limit Value 
+    4.0,                     !- Upper Limit Value 
+    Discrete;                !- Numeric Type 
+
+  Schedule:Compact,
+    OcupSala,                !- Name 
+    fracao,                  !- Schedule Type Limits Name 
+    Through: 12/31,          !- Field 
+    For: AllDays,            !- Field 
+    Until: 14:00,0,          !- Fields 5 - 7
+    Until: 18:00,.5,         !- Fields 7 - 9
+    Until: 22:00,1,          !- Fields 9 - 11
+    Until: 24:00,0;          !- Fields 11 - 13
+
+  Schedule:Compact,
+    OcupDorm,                !- Name 
+    fracao,                  !- Schedule Type Limits Name 
+    Through: 12/31,          !- Field 
+    For: AllDays,            !- Field 
+    Until:  8:00,1,          !- Fields 5 - 7
+    Until: 22:00,0,          !- Fields 7 - 9
+    Until: 24:00,1;          !- Fields 9 - 11
+
+  Schedule:Compact,
+    IlumSala,                !- Name 
+    fracao,                  !- Schedule Type Limits Name 
+    Through: 12/31,          !- Field 
+    For: AllDays,            !- Field 
+    Until: 16:00,0,          !- Fields 5 - 7
+    Until: 22:00,1,          !- Fields 7 - 9
+    Until: 24:00,0;          !- Fields 9 - 11
+
+  Schedule:Compact,
+    IlumDorm1,               !- Name 
+    fracao,                  !- Schedule Type Limits Name 
+    Through: 12/31,          !- Field 
+    For: AllDays,            !- Field 
+    Until: 6:00,0,           !- Fields 5 - 7
+    Until: 8:00,1,           !- Fields 7 - 9
+    Until: 22:00,0,          !- Fields 9 - 11
+    Until: 24:00,1;          !- Fields 11 - 13
+
+  Schedule:Compact,
+    IlumDorm2,               !- Name 
+    fracao,                  !- Schedule Type Limits Name 
+    Through: 12/31,          !- Field 
+    For: AllDays,            !- Field 
+    Until: 6:00,0,           !- Fields 5 - 7
+    Until: 8:00,1,           !- Fields 7 - 9
+    Until: 22:00,0,          !- Fields 9 - 11
+    Until: 24:00,1;          !- Fields 11 - 13
+
+  Schedule:Compact,
+    IlumDorm3,               !- Name 
+    fracao,                  !- Schedule Type Limits Name 
+    Through: 12/31,          !- Field 
+    For: AllDays,            !- Field 
+    Until: 6:00,0,           !- Fields 5 - 7
+    Until: 8:00,1,           !- Fields 7 - 9
+    Until: 22:00,0,          !- Fields 9 - 11
+    Until: 24:00,1;          !- Fields 11 - 13
+
+  Schedule:Compact,
+    AtivSala,                !- Name 
+    atividade,               !- Schedule Type Limits Name 
+    Through: 12/31,          !- Field 
+    For:AllDays,             !- Field 
+    Until: 24:00,108;        !- Fields 5 - 7
+
+  Schedule:Compact,
+    AtivDorm,                !- Name 
+    atividade,               !- Schedule Type Limits Name 
+    Through: 12/31,          !- Field 
+    For:AllDays,             !- Field 
+    Until: 24:00,81;         !- Fields 5 - 7
+
+  Schedule:Compact,
+    EquipSala,               !- Name 
+    fracao,                  !- Schedule Type Limits Name 
+    Through: 12/31,          !- Field 
+    For:AllDays,             !- Field 
+    Until: 14:00,0,          !- Fields 5 - 7
+    Until: 22:00,1,          !- Fields 7 - 9
+    Until: 24:00,0;          !- Fields 9 - 11
+
+  Schedule:Constant,HVAC_Sala,On_Off,0.0;
+
+  Schedule:Constant,VN_Sala,On_Off,1.0;
+
+  Schedule:Constant,HVAC_Dorm1,On_Off,0.0;
+
+  Schedule:Constant,VN_Dorm1,On_Off,1.0;
+
+  Schedule:Constant,HVAC_Dorm2,On_Off,0.0;
+
+  Schedule:Constant,VN_Dorm2,On_Off,1.0;
+
+  Schedule:Constant,HVAC_Dorm3,On_Off,0.0;
+
+  Schedule:Constant,VN_Dorm3,On_Off,1.0;
+
+  Schedule:Constant,Veneziana_Dorm1,On_Off,0.0;
+
+  Schedule:Constant,Veneziana_Dorm2,On_Off,0.0;
+
+  Schedule:Constant,Veneziana_Dorm3,On_Off,0.0;
+
+  Schedule:Constant,Veneziana_Sala,On_Off,0.0;
+
+!-   ===========  ALL OBJECTS OF GROUP: Surface Construction Elements  ===========
+
+  Material,
+    RevestExt,               !- Name 
+    Rough,                   !- Roughness 
+    0.025,                   !- Thickness {m}
+    1.15,                    !- Conductivity {W/m-K}
+    2000.0,                  !- Density {kg/m3}
+    1000.0,                  !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.5,              !- Solar Absorptance 
+    0.5;              !- Visible Absorptance 
+
+  Material,
+    RevestInt,               !- Name 
+    Rough,                   !- Roughness 
+    0.025,                   !- Thickness {m}
+    1.15,                    !- Conductivity {W/m-K}
+    2000.0,                  !- Density {kg/m3}
+    1000.0,                  !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.4,                     !- Solar Absorptance 
+    0.4;                     !- Visible Absorptance 
+
+  Material,
+    Tij8Furos2.24,           !- Name 
+    Rough,                   !- Roughness 
+    0.033,                   !- Thickness {m}
+    0.9,                     !- Conductivity {W/m-K}
+    1103.0,                  !- Density {kg/m3}
+    920.0,                   !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.7,                     !- Solar Absorptance 
+    0.7;                     !- Visible Absorptance 
+
+  Material,
+    EPS1mm,                  !- Name 
+    MediumRough,             !- Roughness 
+    0.001,                   !- Thickness {m}
+    0.035,                   !- Conductivity {W/m-K}
+    30.0,                    !- Density {kg/m3}
+    1400.0,                  !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.8,                     !- Solar Absorptance 
+    0.8;                     !- Visible Absorptance 
+
+  Material,
+    EPS3mm,                  !- Name 
+    MediumRough,             !- Roughness 
+    0.003,                   !- Thickness {m}
+    0.035,                   !- Conductivity {W/m-K}
+    30.0,                    !- Density {kg/m3}
+    1400.0,                  !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.8,                     !- Solar Absorptance 
+    0.8;                     !- Visible Absorptance 
+
+  Material,
+    EPS1cm,                  !- Name 
+    MediumRough,             !- Roughness 
+    0.01,                    !- Thickness {m}
+    0.035,                   !- Conductivity {W/m-K}
+    30.0,                    !- Density {kg/m3}
+    1400.0,                  !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.8,                     !- Solar Absorptance 
+    0.8;                     !- Visible Absorptance 
+
+  Material,
+    EPS1.5cm,                !- Name 
+    MediumRough,             !- Roughness 
+    0.015,                   !- Thickness {m}
+    0.035,                   !- Conductivity {W/m-K}
+    30.0,                    !- Density {kg/m3}
+    1400.0,                  !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.8,                     !- Solar Absorptance 
+    0.8;                     !- Visible Absorptance 
+
+  Material,
+    EPS2cm,                  !- Name 
+    MediumRough,             !- Roughness 
+    0.02,                    !- Thickness {m}
+    0.035,                   !- Conductivity {W/m-K}
+    30.0,                    !- Density {kg/m3}
+    1400.0,                  !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.8,                     !- Solar Absorptance 
+    0.8;                     !- Visible Absorptance 
+
+  Material,
+    EPS2.5cm,                !- Name 
+    MediumRough,             !- Roughness 
+    0.025,                   !- Thickness {m}
+    0.035,                   !- Conductivity {W/m-K}
+    30.0,                    !- Density {kg/m3}
+    1400.0,                  !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.8,                     !- Solar Absorptance 
+    0.8;                     !- Visible Absorptance 
+
+  Material,
+    EPS4cm,                  !- Name 
+    MediumRough,             !- Roughness 
+    0.04,                    !- Thickness {m}
+    0.035,                   !- Conductivity {W/m-K}
+    30.0,                    !- Density {kg/m3}
+    1400.0,                  !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.8,                     !- Solar Absorptance 
+    0.8;                     !- Visible Absorptance 
+
+  Material,
+    EPS6cm,                  !- Name 
+    MediumRough,             !- Roughness 
+    0.06,                    !- Thickness {m}
+    0.035,                   !- Conductivity {W/m-K}
+    30.0,                    !- Density {kg/m3}
+    1400.0,                  !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.8,                     !- Solar Absorptance 
+    0.8;                     !- Visible Absorptance 
+
+  Material,
+    TijMacicoExt10cm,        !- Name 
+    MediumSmooth,            !- Roughness 
+    0.1,                     !- Thickness {m}
+    0.9,                     !- Conductivity {W/m-K}
+    1600.0,                  !- Density {kg/m3}
+    920.0,                   !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.6,                     !- Solar Absorptance 
+    0.6;                     !- Visible Absorptance 
+
+  Material,
+    TijMacicoInt,            !- Name 
+    MediumSmooth,            !- Roughness 
+    0.1,                     !- Thickness {m}
+    0.9,                     !- Conductivity {W/m-K}
+    1600.0,                  !- Density {kg/m3}
+    920.0,                   !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.3,                     !- Solar Absorptance 
+    0.3;                     !- Visible Absorptance 
+
+  Material,
+    ConcParExt10cm,          !- Name 
+    Rough,                   !- Roughness 
+    0.1,                     !- Thickness {m}
+    1.75,                    !- Conductivity {W/m-K}
+    2500.0,                  !- Density {kg/m3}
+    1000.0,                  !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.6,                     !- Solar Absorptance 
+    0.6;                     !- Visible Absorptance 
+
+  Material,
+    ConcParInt10cm,          !- Name 
+    Rough,                   !- Roughness 
+    0.1,                     !- Thickness {m}
+    1.75,                    !- Conductivity {W/m-K}
+    2500.0,                  !- Density {kg/m3}
+    1000.0,                  !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.3,                     !- Solar Absorptance 
+    0.3;                     !- Visible Absorptance 
+
+  Material,
+    FibroParExt,             !- Name 
+    Smooth,                  !- Roughness 
+    0.012,                   !- Thickness {m}
+    0.95,                    !- Conductivity {W/m-K}
+    1900.0,                  !- Density {kg/m3}
+    840.0,                   !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.5,              !- Solar Absorptance 
+    0.5;              !- Visible Absorptance 
+
+  Material,
+    GessoParInt,             !- Name 
+    MediumSmooth,            !- Roughness 
+    0.0125,                  !- Thickness {m}
+    0.35,                    !- Conductivity {W/m-K}
+    750.0,                   !- Density {kg/m3}
+    840.0,                   !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.3,                     !- Solar Absorptance 
+    0.3;                     !- Visible Absorptance 
+
+  Material,
+    LaVidro8cm,              !- Name 
+    MediumRough,             !- Roughness 
+    0.08,                    !- Thickness {m}
+    0.045,                   !- Conductivity {W/m-K}
+    50.0,                    !- Density {kg/m3}
+    700.0,                   !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.8,                     !- Solar Absorptance 
+    0.8;                     !- Visible Absorptance 
+
+  Material,
+    LaVidro3.4cm,            !- Name 
+    MediumRough,             !- Roughness 
+    0.034,                   !- Thickness {m}
+    0.045,                   !- Conductivity {W/m-K}
+    50.0,                    !- Density {kg/m3}
+    700.0,                   !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.8,                     !- Solar Absorptance 
+    0.8;                     !- Visible Absorptance 
+
+  Material,
+    LaVidro2cm,              !- Name 
+    MediumRough,             !- Roughness 
+    0.02,                    !- Thickness {m}
+    0.045,                   !- Conductivity {W/m-K}
+    50.0,                    !- Density {kg/m3}
+    700.0,                   !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.8,                     !- Solar Absorptance 
+    0.8;                     !- Visible Absorptance 
+
+  Material,
+    LaVidro1cm,              !- Name 
+    MediumRough,             !- Roughness 
+    0.0102,                  !- Thickness {m}
+    0.045,                   !- Conductivity {W/m-K}
+    50.0,                    !- Density {kg/m3}
+    700.0,                   !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.8,                     !- Solar Absorptance 
+    0.8;                     !- Visible Absorptance 
+
+  Material,
+    LaVidro2.5mm,            !- Name 
+    MediumRough,             !- Roughness 
+    0.0025,                  !- Thickness {m}
+    0.045,                   !- Conductivity {W/m-K}
+    50.0,                    !- Density {kg/m3}
+    700.0,                   !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.8,                     !- Solar Absorptance 
+    0.8;                     !- Visible Absorptance 
+
+  Material,
+    LaVidro5mm,              !- Name 
+    MediumRough,             !- Roughness 
+    0.005,                   !- Thickness {m}
+    0.045,                   !- Conductivity {W/m-K}
+    50.0,                    !- Density {kg/m3}
+    700.0,                   !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.8,                     !- Solar Absorptance 
+    0.8;                     !- Visible Absorptance 
+
+  Material,
+    RevestCob,               !- Name 
+    Rough,                   !- Roughness 
+    0.025,                   !- Thickness {m}
+    1.15,                    !- Conductivity {W/m-K}
+    2000.0,                  !- Density {kg/m3}
+    1000.0,                  !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.3,                     !- Solar Absorptance 
+    0.3;                     !- Visible Absorptance 
+
+  Material,
+    RevestCob1cm,            !- Name 
+    Rough,                   !- Roughness 
+    0.01,                    !- Thickness {m}
+    1.15,                    !- Conductivity {W/m-K}
+    2500.0,                  !- Density {kg/m3}
+    1000.0,                  !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.5,              !- Solar Absorptance 
+    0.5;              !- Visible Absorptance 
+
+  Material,
+    RevestCob4cm,            !- Name 
+    Rough,                   !- Roughness 
+    0.04,                    !- Thickness {m}
+    1.15,                    !- Conductivity {W/m-K}
+    2500.0,                  !- Density {kg/m3}
+    1000.0,                  !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.3,                     !- Solar Absorptance 
+    0.3;                     !- Visible Absorptance 
+
+  Material,
+    ConcCob10cm,             !- Name 
+    Rough,                   !- Roughness 
+    0.1,                     !- Thickness {m}
+    1.75,                    !- Conductivity {W/m-K}
+    2500.0,                  !- Density {kg/m3}
+    1000.0,                  !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.5,              !- Solar Absorptance 
+    0.5;              !- Visible Absorptance 
+
+  Material,
+    LajeConcCob10cm,         !- Name 
+    Rough,                   !- Roughness 
+    0.1,                     !- Thickness {m}
+    1.75,                    !- Conductivity {W/m-K}
+    2500.0,                  !- Density {kg/m3}
+    1000.0,                  !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.4,                     !- Solar Absorptance 
+    0.4;                     !- Visible Absorptance 
+
+  Material,
+    LajeMista12cm,           !- Name 
+    Rough,                   !- Roughness 
+    0.095,                   !- Thickness {m}
+    1.05,                    !- Conductivity {W/m-K}
+    1087.0,                  !- Density {kg/m3}
+    920.0,                   !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.8,                     !- Solar Absorptance 
+    0.8;                     !- Visible Absorptance 
+
+  Material,
+    TelhaFC,                 !- Name 
+    Rough,                   !- Roughness 
+    0.008,                   !- Thickness {m}
+    0.95,                    !- Conductivity {W/m-K}
+    1900.0,                  !- Density {kg/m3}
+    840.0,                   !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.5,              !- Solar Absorptance 
+    0.5;              !- Visible Absorptance 
+
+  Material,
+    ForMad8mm,               !- Name 
+    Rough,                   !- Roughness 
+    0.008,                   !- Thickness {m}
+    0.15,                    !- Conductivity {W/m-K}
+    650.0,                   !- Density {kg/m3}
+    2300.0,                  !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.4,                     !- Solar Absorptance 
+    0.4;                     !- Visible Absorptance 
+
+  Material,
+    ForMadPinus8mm,          !- Name 
+    Rough,                   !- Roughness 
+    0.008,                   !- Thickness {m}
+    0.23,                    !- Conductivity {W/m-K}
+    650.0,                   !- Density {kg/m3}
+    1340.0,                  !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.4,                     !- Solar Absorptance 
+    0.4;                     !- Visible Absorptance 
+
+  Material,
+    EPS1.6mm,                !- Name 
+    MediumRough,             !- Roughness 
+    0.0016,                  !- Thickness {m}
+    0.035,                   !- Conductivity {W/m-K}
+    30.0,                    !- Density {kg/m3}
+    1400.0,                  !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.8,                     !- Solar Absorptance 
+    0.8;                     !- Visible Absorptance 
+
+  Material,
+    EPS2.3mm,                !- Name 
+    MediumRough,             !- Roughness 
+    0.0023,                  !- Thickness {m}
+    0.035,                   !- Conductivity {W/m-K}
+    30.0,                    !- Density {kg/m3}
+    1400.0,                  !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.8,                     !- Solar Absorptance 
+    0.8;                     !- Visible Absorptance 
+
+  Material,
+    EPS4mm,                  !- Name 
+    MediumRough,             !- Roughness 
+    0.004,                   !- Thickness {m}
+    0.035,                   !- Conductivity {W/m-K}
+    30.0,                    !- Density {kg/m3}
+    1400.0,                  !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.8,                     !- Solar Absorptance 
+    0.8;                     !- Visible Absorptance 
+
+  Material,
+    EPS5mm,                  !- Name 
+    MediumRough,             !- Roughness 
+    0.005,                   !- Thickness {m}
+    0.035,                   !- Conductivity {W/m-K}
+    30.0,                    !- Density {kg/m3}
+    1400.0,                  !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.8,                     !- Solar Absorptance 
+    0.8;                     !- Visible Absorptance 
+
+  Material,
+    EPS7mm,                  !- Name 
+    MediumRough,             !- Roughness 
+    0.007,                   !- Thickness {m}
+    0.035,                   !- Conductivity {W/m-K}
+    30.0,                    !- Density {kg/m3}
+    1400.0,                  !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.8,                     !- Solar Absorptance 
+    0.8;                     !- Visible Absorptance 
+
+  Material,
+    EPS13mm,                 !- Name 
+    MediumRough,             !- Roughness 
+    0.013,                   !- Thickness {m}
+    0.035,                   !- Conductivity {W/m-K}
+    30.0,                    !- Density {kg/m3}
+    1400.0,                  !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.8,                     !- Solar Absorptance 
+    0.8;                     !- Visible Absorptance 
+
+  Material,
+    EPS17mm,                 !- Name 
+    MediumRough,             !- Roughness 
+    0.017,                   !- Thickness {m}
+    0.035,                   !- Conductivity {W/m-K}
+    30.0,                    !- Density {kg/m3}
+    1400.0,                  !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.8,                     !- Solar Absorptance 
+    0.8;                     !- Visible Absorptance 
+
+  Material,
+    EPS20mm,                 !- Name 
+    MediumRough,             !- Roughness 
+    0.02,                    !- Thickness {m}
+    0.035,                   !- Conductivity {W/m-K}
+    30.0,                    !- Density {kg/m3}
+    1400.0,                  !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.8,                     !- Solar Absorptance 
+    0.8;                     !- Visible Absorptance 
+
+  Material,
+    EPS25mm,                 !- Name 
+    MediumRough,             !- Roughness 
+    0.025,                   !- Thickness {m}
+    0.035,                   !- Conductivity {W/m-K}
+    30.0,                    !- Density {kg/m3}
+    1400.0,                  !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.8,                     !- Solar Absorptance 
+    0.8;                     !- Visible Absorptance 
+
+  Material,
+    EPS50mm,                 !- Name 
+    MediumRough,             !- Roughness 
+    0.05,                    !- Thickness {m}
+    0.035,                   !- Conductivity {W/m-K}
+    30.0,                    !- Density {kg/m3}
+    1400.0,                  !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.8,                     !- Solar Absorptance 
+    0.8;                     !- Visible Absorptance 
+
+  Material,
+    EPS55mm,                 !- Name 
+    MediumRough,             !- Roughness 
+    0.055,                   !- Thickness {m}
+    0.035,                   !- Conductivity {W/m-K}
+    30.0,                    !- Density {kg/m3}
+    1400.0,                  !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.8,                     !- Solar Absorptance 
+    0.8;                     !- Visible Absorptance 
+
+  Material,
+    EPS60mm,                 !- Name 
+    MediumRough,             !- Roughness 
+    0.06,                    !- Thickness {m}
+    0.035,                   !- Conductivity {W/m-K}
+    30.0,                    !- Density {kg/m3}
+    1400.0,                  !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.8,                     !- Solar Absorptance 
+    0.8;                     !- Visible Absorptance 
+
+  Material,
+    PortaMadInt3cm,          !- Name 
+    Rough,                   !- Roughness 
+    0.03,                    !- Thickness {m}
+    0.15,                    !- Conductivity {W/m-K}
+    650.0,                   !- Density {kg/m3}
+    2300.0,                  !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.4,                     !- Solar Absorptance 
+    0.4;                     !- Visible Absorptance 
+
+  Material,
+    PortaMadExt3cm,          !- Name 
+    Rough,                   !- Roughness 
+    0.03,                    !- Thickness {m}
+    0.15,                    !- Conductivity {W/m-K}
+    614.0,                   !- Density {kg/m3}
+    2300.0,                  !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.6,                     !- Solar Absorptance 
+    0.6;                     !- Visible Absorptance 
+
+  Material,
+    PisoCer10mm,             !- Name 
+    MediumSmooth,            !- Roughness 
+    0.01,                    !- Thickness {m}
+    0.9,                     !- Conductivity {W/m-K}
+    1600.0,                  !- Density {kg/m3}
+    920.0,                   !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.4,                     !- Solar Absorptance 
+    0.4;                     !- Visible Absorptance 
+
+  Material,
+    PisoMad1cm,              !- Name 
+    MediumSmooth,            !- Roughness 
+    0.01,                    !- Thickness {m}
+    0.15,                    !- Conductivity {W/m-K}
+    650.0,                   !- Density {kg/m3}
+    2300.0,                  !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.4,                     !- Solar Absorptance 
+    0.4;                     !- Visible Absorptance 
+
+  Material,
+    PisoArgam2.5cm,          !- Name 
+    Rough,                   !- Roughness 
+    0.025,                   !- Thickness {m}
+    1.15,                    !- Conductivity {W/m-K}
+    2000.0,                  !- Density {kg/m3}
+    1000.0,                  !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.7,                     !- Solar Absorptance 
+    0.7;                     !- Visible Absorptance 
+
+  Material,
+    ParedeFicticia,          !- Name 
+    Rough,                   !- Roughness 
+    0.1,                     !- Thickness {m}
+    0.055,                   !- Conductivity {W/m-K}
+    500.0,                   !- Density {kg/m3}
+    1000.0,                  !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.5,                     !- Solar Absorptance 
+    0.5;                     !- Visible Absorptance 
+
+  Material,
+    CoberturaFicticia,       !- Name 
+    Rough,                   !- Roughness 
+    0.1,                     !- Thickness {m}
+    0.056,                   !- Conductivity {W/m-K}
+    500.0,                   !- Density {kg/m3}
+    1000.0,                  !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.5,                     !- Solar Absorptance 
+    0.5;                     !- Visible Absorptance 
+
+  Material,
+    ConcParExt12cm,          !- Name 
+    Rough,                   !- Roughness 
+    0.12,                    !- Thickness {m}
+    1.75,                    !- Conductivity {W/m-K}
+    2500.0,                  !- Density {kg/m3}
+    1000.0,                  !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance 
+    0.6,                     !- Solar Absorptance 
+    0.6;                     !- Visible Absorptance 
+
+  Material:AirGap,
+    CamaraFluxoHoriz0.04,    !- Name 
+    0.04;                    !- Thermal Resistance {m2-K/W}
+
+  Material:AirGap,
+    CamaraFluxoHoriz0.16,    !- Name 
+    0.16;                    !- Thermal Resistance {m2-K/W}
+
+  Material:AirGap,
+    RarVertAltaEmis<1cm,     !- Name 
+    0.08;                    !- Thermal Resistance {m2-K/W}
+
+  Material:AirGap,
+    RarVertAltaEmis<2cm,     !- Name 
+    0.15;                    !- Thermal Resistance {m2-K/W}
+
+  Material:AirGap,
+    RarVertAltaEmis>5cm,     !- Name 
+    0.21;                    !- Thermal Resistance {m2-K/W}
+
+  WindowMaterial:SimpleGlazingSystem,
+    VidFS0.87,               !- Name 
+    5.7,                     !- U-Factor {W/m2-K}
+    0.87,                    !- Solar Heat Gain Coefficient 
+    0.75;                    !- Visible Transmittance 
+
+  WindowMaterial:SimpleGlazingSystem,
+    VidFS0.60,               !- Name 
+    5.7,                     !- U-Factor {W/m2-K}
+    0.6,                     !- Solar Heat Gain Coefficient 
+    0.75;                    !- Visible Transmittance 
+
+  WindowMaterial:SimpleGlazingSystem,
+    VidFS0.35,               !- Name 
+    5.7,                     !- U-Factor {W/m2-K}
+    0.35,                    !- Solar Heat Gain Coefficient 
+    0.75;                    !- Visible Transmittance 
+
+  WindowMaterial:Glazing,
+    VidroSHGC38,             !- Name 
+    SpectralAverage,         !- Optical Data Type 
+    ,                        !- Window Glass Spectral Data Set Name 
+    0.006,                   !- Thickness {m}
+    0.32,                    !- Solar Transmittance at Normal Incidence 
+    0.48,                    !- Front Side Solar Reflectance at Normal Incidence 
+    0.51,                    !- Back Side Solar Reflectance at Normal Incidence 
+    0.37,                    !- Visible Transmittance at Normal Incidence 
+    0.35,                    !- Front Side Visible Reflectance at Normal Incidence 
+    0.34,                    !- Back Side Visible Reflectance at Normal Incidence 
+    0.0,                     !- Infrared Transmittance at Normal Incidence 
+    0.84,                    !- Front Side Infrared Hemispherical Emissivity 
+    0.84,                    !- Back Side Infrared Hemispherical Emissivity 
+    0.9;                     !- Conductivity {W/m-K}
+
+  WindowMaterial:Glazing,
+    VidroSHGC87,             !- Name 
+    SpectralAverage,         !- Optical Data Type 
+    ,                        !- Window Glass Spectral Data Set Name 
+    0.006,                   !- Thickness {m}
+    0.85,                    !- Solar Transmittance at Normal Incidence 
+    0.071,                   !- Front Side Solar Reflectance at Normal Incidence 
+    0.071,                   !- Back Side Solar Reflectance at Normal Incidence 
+    0.881,                   !- Visible Transmittance at Normal Incidence 
+    0.08,                    !- Front Side Visible Reflectance at Normal Incidence 
+    0.08,                    !- Back Side Visible Reflectance at Normal Incidence 
+    0.0,                     !- Infrared Transmittance at Normal Incidence 
+    0.84,                    !- Front Side Infrared Hemispherical Emissivity 
+    0.84,                    !- Back Side Infrared Hemispherical Emissivity 
+    0.9;                     !- Conductivity {W/m-K}
+
+  WindowMaterial:Gas,
+    CamaraArVidro,           !- Name 
+    Air,                     !- Gas Type 
+    0.009;                   !- Thickness {m}
+
+  WindowMaterial:Blind,
+    Veneziana PVC,           !- Name 
+    Horizontal,              !- Slat Orientation 
+    0.06,                    !- Slat Width {m}
+    0.062,                   !- Slat Separation {m}
+    0.01,                    !- Slat Thickness {m}
+    0.0,                     !- Slat Angle {deg}
+    0.21,                    !- Slat Conductivity {W/m-K}
+    0.0,                     !- Slat Beam Solar Transmittance 
+    0.8,                     !- Front Side Slat Beam Solar Reflectance 
+    0.8,                     !- Back Side Slat Beam Solar Reflectance 
+    0.0,                     !- Slat Diffuse Solar Transmittance 
+    0.8,                     !- Front Side Slat Diffuse Solar Reflectance 
+    0.8,                     !- Back Side Slat Diffuse Solar Reflectance 
+    0.0,                     !- Slat Beam Visible Transmittance 
+    0.8,                     !- Front Side Slat Beam Visible Reflectance 
+    0.8,                     !- Back Side Slat Beam Visible Reflectance 
+    0.0,                     !- Slat Diffuse Visible Transmittance 
+    0.8,                     !- Front Side Slat Diffuse Visible Reflectance 
+    0.8,                     !- Back Side Slat Diffuse Visible Reflectance 
+    0.0,                     !- Slat Infrared Hemispherical Transmittance 
+    0.9,                     !- Front Side Slat Infrared Hemispherical Emissivity 
+    0.9,                     !- Back Side Slat Infrared Hemispherical Emissivity 
+    0.05,                    !- Blind to Glass Distance {m}
+    0.0,                     !- Blind Top Opening Multiplier 
+    0.0,                     !- Blind Bottom Opening Multiplier 
+    0.0,                     !- Blind Left Side Opening Multiplier 
+    0.0,                     !- Blind Right Side Opening Multiplier 
+    ,                        !- Minimum Slat Angle {deg}
+    180.0;                   !- Maximum Slat Angle {deg}
+
+  Construction,
+    Parede Interna,          !- Name 
+    RevestInt,               !- Outside Layer 
+    Tij8Furos2.24,           !- Layer 2 
+    CamaraFluxoHoriz0.16,    !- Layer 3 
+    Tij8Furos2.24,           !- Layer 4 
+    RevestInt;               !- Layer 5 
+
+  Construction,
+    ParInt2,                 !- Name 
+    TijMacicoInt;            !- Outside Layer 
+
+  Construction,
+    ParInt3,                 !- Name 
+    ConcParInt10cm;          !- Outside Layer 
+
+  Construction,
+    ParInt4,                 !- Name 
+    GessoParInt,             !- Outside Layer 
+    LaVidro8cm,              !- Layer 2 
+    GessoParInt;             !- Layer 3 
+
+  Construction,
+    ParInt5,                 !- Name 
+    GessoParInt,             !- Outside Layer 
+    LaVidro3.4cm,            !- Layer 2 
+    GessoParInt;             !- Layer 3 
+
+  Construction,
+    ParInt6,                 !- Name 
+    GessoParInt,             !- Outside Layer 
+    LaVidro1cm,              !- Layer 2 
+    GessoParInt;             !- Layer 3 
+
+  Construction,
+    ParInt7,                 !- Name 
+    GessoParInt,             !- Outside Layer 
+    LaVidro2.5mm,            !- Layer 2 
+    GessoParInt;             !- Layer 3 
+
+  Construction,
+    ParInt8,                 !- Name 
+    RevestInt,               !- Outside Layer 
+    Tij8Furos2.24,           !- Layer 2 
+    CamaraFluxoHoriz0.16,    !- Layer 3 
+    Tij8Furos2.24,           !- Layer 4 
+    RevestInt;               !- Layer 5 
+
+  Construction,
+    InteriorCeiling,         !- Name 
+    ConcCob10cm;             !- Outside Layer 
+
+  Construction,
+    Interior Floor,          !- Name 
+    ConcCob10cm;             !- Outside Layer 
+
+  Construction,
+    Porta,                   !- Name 
+    PortaMadInt3cm;          !- Outside Layer 
+
+  Construction,
+    PorExt,                  !- Name 
+    PortaMadExt3cm;          !- Outside Layer 
+
+  Construction,
+    Vid1,                    !- Name 
+    VidroSHGC38;             !- Outside Layer 
+
+  Construction,
+    Vid2,                    !- Name 
+    VidroSHGC87;             !- Outside Layer 
+
+  Construction,
+    Vid3,                    !- Name 
+    VidroSHGC38,             !- Outside Layer 
+    CamaraArVidro,           !- Layer 2 
+    VidroSHGC38;             !- Layer 3 
+
+  Construction,
+    Vid4,                    !- Name 
+    VidroSHGC87,             !- Outside Layer 
+    CamaraArVidro,           !- Layer 2 
+    VidroSHGC87;             !- Layer 3 
+
+  Construction,
+    Parede,                  !- Name 
+    ParedeFicticia;          !- Outside Layer 
+
+  Construction,
+    Cobertura,               !- Name 
+    CoberturaFicticia;       !- Outside Layer 
+
+  Construction,
+    Parede11,                !- Name 
+    FibroParExt,             !- Outside Layer 
+    LaVidro8cm,              !- Layer 2 
+    GessoParInt;             !- Layer 3 
+
+  Construction,
+    Parede12,                !- Name 
+    FibroParExt,             !- Outside Layer 
+    LaVidro1cm,              !- Layer 2 
+    GessoParInt;             !- Layer 3 
+
+  Construction,
+    Parede13,                !- Name 
+    FibroParExt,             !- Outside Layer 
+    LaVidro2.5mm,            !- Layer 2 
+    GessoParInt;             !- Layer 3 
+
+  Construction,
+    Parede21,                !- Name 
+    RevestExt,               !- Outside Layer 
+    EPS4cm,                  !- Layer 2 
+    Tij8Furos2.24,           !- Layer 3 
+    CamaraFluxoHoriz0.16,    !- Layer 4 
+    Tij8Furos2.24,           !- Layer 5 
+    RevestInt;               !- Layer 6 
+
+  Construction,
+    Parede22,                !- Name 
+    RevestExt,               !- Outside Layer 
+    Tij8Furos2.24,           !- Layer 2 
+    CamaraFluxoHoriz0.16,    !- Layer 3 
+    Tij8Furos2.24,           !- Layer 4 
+    RevestInt;               !- Layer 5 
+
+  Construction,
+    Parede23,                !- Name 
+    RevestExt,               !- Outside Layer 
+    Tij8Furos2.24,           !- Layer 2 
+    Tij8Furos2.24,           !- Layer 3 
+    RevestInt;               !- Layer 4 
+
+  Construction,
+    Parede31,                !- Name 
+    RevestExt,               !- Outside Layer 
+    EPS6cm,                  !- Layer 2 
+    ConcParInt10cm;          !- Layer 3 
+
+  Construction,
+    Parede32,                !- Name 
+    RevestExt,               !- Outside Layer 
+    EPS7mm,                  !- Layer 2 
+    ConcParInt10cm;          !- Layer 3 
+
+  Construction,
+    Parede33,                !- Name 
+    RevestExt,               !- Outside Layer 
+    EPS1mm,                  !- Layer 2 
+    ConcParInt10cm;          !- Layer 3 
+
+  Construction,
+    Cobertura11,             !- Name 
+    TelhaFC,                 !- Outside Layer 
+    RarVertAltaEmis>5cm,     !- Layer 2 
+    EPS55mm,                 !- Layer 3 
+    ForMadPinus8mm;          !- Layer 4 
+
+  Construction,
+    Cobertura12,             !- Name 
+    TelhaFC,                 !- Outside Layer 
+    RarVertAltaEmis>5cm,     !- Layer 2 
+    ForMad8mm;               !- Layer 3 
+
+  Construction,
+    Cobertura13,             !- Name 
+    TelhaFC,                 !- Outside Layer 
+    ForMad8mm;               !- Layer 2 
+
+  Construction,
+    Cobertura21,             !- Name 
+    TelhaFC,                 !- Outside Layer 
+    RarVertAltaEmis>5cm,     !- Layer 2 
+    EPS50mm,                 !- Layer 3 
+    LajeMista12cm;           !- Layer 4 
+
+  Construction,
+    Cobertura22,             !- Name 
+    TelhaFC,                 !- Outside Layer 
+    RarVertAltaEmis>5cm,     !- Layer 2 
+    LajeMista12cm;           !- Layer 3 
+
+  Construction,
+    Cobertura23,             !- Name 
+    RevestCob1cm,            !- Outside Layer 
+    LajeMista12cm;           !- Layer 2 
+
+  Construction,
+    Cobertura31,             !- Name 
+    TelhaFC,                 !- Outside Layer 
+    RarVertAltaEmis>5cm,     !- Layer 2 
+    EPS60mm,                 !- Layer 3 
+    LajeConcCob10cm;         !- Layer 4 
+
+  Construction,
+    Cobertura32,             !- Name 
+    TelhaFC,                 !- Outside Layer 
+    RarVertAltaEmis>5cm,     !- Layer 2 
+    LajeConcCob10cm;         !- Layer 3 
+
+  Construction,
+    Cobertura33,             !- Name 
+    ConcCob10cm;             !- Outside Layer 
+
+  Construction,
+    PisoCeramica,            !- Name 
+    LajeMista12cm,           !- Outside Layer 
+    PisoArgam2.5cm,          !- Layer 2 
+    PisoCer10mm;             !- Layer 3 
+
+  Construction,
+    PisoMadeira,             !- Name 
+    LajeMista12cm,           !- Outside Layer 
+    PisoArgam2.5cm,          !- Layer 2 
+    PisoMad1cm;              !- Layer 3 
+
+!-   ===========  ALL OBJECTS OF GROUP: Thermal Zones and Surfaces  ===========
+
+  GlobalGeometryRules,
+    UpperLeftCorner,         !- Starting Vertex Position 
+    Counterclockwise,        !- Vertex Entry Direction 
+    Relative,                !- Coordinate System 
+    Relative,                !- Daylighting Reference Point Coordinate System 
+    Relative;                !- Rectangular Surface Coordinate System 
+
+  ZoneList,
+    Dorms,                   !- Name 
+    Dorm1,                   !- Zone 1 Name 
+    Dorm2,                   !- Zone 1 Name 
+    Dorm3;                   !- Zone 1 Name 
+
+  WindowProperty:ShadingControl,
+    Veneziana_D1,            !- Name 
+    ExteriorBlind,           !- Shading Type 
+    ,                        !- Construction with Shading Name 
+    AlwaysOff,           !- Shading Control Type 
+    Veneziana_Dorm1,         !- Schedule Name 
+    24.0,                    !- Setpoint {W/m2, W or deg C}
+    Yes,                     !- Shading Control Is Scheduled 
+    No,                      !- Glare Control Is Active 
+    Veneziana PVC,           !- Shading Device Material Name 
+    FixedSlatAngle,          !- Type of Slat Angle Control for Blinds 
+    ;                        !- Slat Angle Schedule Name 
+
+  WindowProperty:ShadingControl,
+    Veneziana_D2,            !- Name 
+    ExteriorBlind,           !- Shading Type 
+    ,                        !- Construction with Shading Name 
+    AlwaysOff,           !- Shading Control Type 
+    Veneziana_Dorm2,         !- Schedule Name 
+    24.0,                    !- Setpoint {W/m2, W or deg C}
+    Yes,                     !- Shading Control Is Scheduled 
+    No,                      !- Glare Control Is Active 
+    Veneziana PVC,           !- Shading Device Material Name 
+    FixedSlatAngle,          !- Type of Slat Angle Control for Blinds 
+    ;                        !- Slat Angle Schedule Name 
+
+  WindowProperty:ShadingControl,
+    Veneziana_D3,            !- Name 
+    ExteriorBlind,           !- Shading Type 
+    ,                        !- Construction with Shading Name 
+    AlwaysOff,           !- Shading Control Type 
+    Veneziana_Dorm3,         !- Schedule Name 
+    24.0,                    !- Setpoint {W/m2, W or deg C}
+    Yes,                     !- Shading Control Is Scheduled 
+    No,                      !- Glare Control Is Active 
+    Veneziana PVC,           !- Shading Device Material Name 
+    FixedSlatAngle,          !- Type of Slat Angle Control for Blinds 
+    ;                        !- Slat Angle Schedule Name 
+
+  WindowProperty:ShadingControl,
+    Veneziana_Sala,          !- Name 
+    ExteriorBlind,           !- Shading Type 
+    ,                        !- Construction with Shading Name 
+    AlwaysOff,           !- Shading Control Type 
+    Veneziana_Sala,          !- Schedule Name 
+    24.0,                    !- Setpoint {W/m2, W or deg C}
+    Yes,                     !- Shading Control Is Scheduled 
+    No,                      !- Glare Control Is Active 
+    Veneziana PVC,           !- Shading Device Material Name 
+    FixedSlatAngle,          !- Type of Slat Angle Control for Blinds 
+    ;                        !- Slat Angle Schedule Name 
+
+  BuildingSurface:Detailed,
+    Chao_Dorm1,              !- Name 
+    Floor,                   !- Surface Type 
+    Interior Floor,          !- Construction Name 
+    Dorm1,                   !- Zone Name 
+    Adiabatic,               !- Outside Boundary Condition 
+    ,                        !- Outside Boundary Condition Object 
+    NoSun,                   !- Sun Exposure 
+    NoWind,                  !- Wind Exposure 
+    ,                        !- View Factor to Ground 
+    4.0,                     !- Number of Vertices 
+    25.0,37.5,0.0,           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    25.0,0.0,0.0,            !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    0.0,0.0,0.0,             !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    0.0,37.5,0.0;            !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+
+  BuildingSurface:Detailed,
+    Teto_Dorm1,              !- Name 
+    Ceiling,                 !- Surface Type 
+    InteriorCeiling,         !- Construction Name 
+    Dorm1,                   !- Zone Name 
+    Adiabatic,               !- Outside Boundary Condition 
+    ,                        !- Outside Boundary Condition Object 
+    NoSun,                   !- Sun Exposure 
+    NoWind,                  !- Wind Exposure 
+    ,                        !- View Factor to Ground 
+    4.0,                     !- Number of Vertices 
+    0.0,37.5,3.75,           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    0.0,0.0,3.75,            !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    25.0,0.0,3.75,           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    25.0,37.5,3.75;          !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+
+  BuildingSurface:Detailed,
+    Par1_Dorm1,              !- Name 
+    Wall,                    !- Surface Type 
+    Parede22,       !- Construction Name 
+    Dorm1,                   !- Zone Name 
+    Outdoors,                !- Outside Boundary Condition 
+    ,                        !- Outside Boundary Condition Object 
+    SunExposed,              !- Sun Exposure 
+    WindExposed,             !- Wind Exposure 
+    ,                        !- View Factor to Ground 
+    4.0,                     !- Number of Vertices 
+    25.0,37.5,3.75,          !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    25.0,37.5,0.0,           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    0.0,37.5,0.0,            !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    0.0,37.5,3.75;           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+
+  BuildingSurface:Detailed,
+    Par3_Dorm1,              !- Name 
+    Wall,                    !- Surface Type 
+    Parede Interna,          !- Construction Name 
+    Dorm1,                   !- Zone Name 
+    Surface,                 !- Outside Boundary Condition 
+    Par11_Sala,              !- Outside Boundary Condition Object 
+    NoSun,                   !- Sun Exposure 
+    NoWind,                  !- Wind Exposure 
+    ,                        !- View Factor to Ground 
+    4.0,                     !- Number of Vertices 
+    0.0,0.0,3.75,            !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    0.0,0.0,0.0,             !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    25.0,0.0,0.0,            !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    25.0,0.0,3.75;           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+
+  BuildingSurface:Detailed,
+    Par2_Dorm1,              !- Name 
+    Wall,                    !- Surface Type 
+    Parede Interna,          !- Construction Name 
+    Dorm1,                   !- Zone Name 
+    Surface,                 !- Outside Boundary Condition 
+    Par4_Dorm2,              !- Outside Boundary Condition Object 
+    NoSun,                   !- Sun Exposure 
+    NoWind,                  !- Wind Exposure 
+    ,                        !- View Factor to Ground 
+    4.0,                     !- Number of Vertices 
+    25.0,0.0,3.75,           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    25.0,0.0,0.0,            !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    25.0,37.5,0.0,           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    25.0,37.5,3.75;          !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+
+  BuildingSurface:Detailed,
+    Par4_Dorm1,              !- Name 
+    Wall,                    !- Surface Type 
+    Parede22,       !- Construction Name 
+    Dorm1,                   !- Zone Name 
+    Outdoors,                !- Outside Boundary Condition 
+    ,                        !- Outside Boundary Condition Object 
+    SunExposed,              !- Sun Exposure 
+    WindExposed,             !- Wind Exposure 
+    ,                        !- View Factor to Ground 
+    4.0,                     !- Number of Vertices 
+    0.0,37.5,3.75,           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    0.0,37.5,0.0,            !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    0.0,0.0,0.0,             !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    0.0,0.0,3.75;            !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+
+  BuildingSurface:Detailed,
+    Chao_Dorm2,              !- Name 
+    Floor,                   !- Surface Type 
+    Interior Floor,          !- Construction Name 
+    Dorm2,                   !- Zone Name 
+    Adiabatic,               !- Outside Boundary Condition 
+    ,                        !- Outside Boundary Condition Object 
+    NoSun,                   !- Sun Exposure 
+    NoWind,                  !- Wind Exposure 
+    ,                        !- View Factor to Ground 
+    4.0,                     !- Number of Vertices 
+    25.0,37.5,0.0,           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    25.0,0.0,0.0,            !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    0.0,0.0,0.0,             !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    0.0,37.5,0.0;            !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+
+  BuildingSurface:Detailed,
+    Teto_Dorm2,              !- Name 
+    Ceiling,                 !- Surface Type 
+    InteriorCeiling,         !- Construction Name 
+    Dorm2,                   !- Zone Name 
+    Adiabatic,               !- Outside Boundary Condition 
+    ,                        !- Outside Boundary Condition Object 
+    NoSun,                   !- Sun Exposure 
+    NoWind,                  !- Wind Exposure 
+    ,                        !- View Factor to Ground 
+    4.0,                     !- Number of Vertices 
+    0.0,37.5,3.75,           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    0.0,0.0,3.75,            !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    25.0,0.0,3.75,           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    25.0,37.5,3.75;          !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+
+  BuildingSurface:Detailed,
+    Par1_Dorm2,              !- Name 
+    Wall,                    !- Surface Type 
+    Parede22,       !- Construction Name 
+    Dorm2,                   !- Zone Name 
+    Outdoors,                !- Outside Boundary Condition 
+    ,                        !- Outside Boundary Condition Object 
+    SunExposed,              !- Sun Exposure 
+    WindExposed,             !- Wind Exposure 
+    ,                        !- View Factor to Ground 
+    4.0,                     !- Number of Vertices 
+    25.0,37.5,3.75,          !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    25.0,37.5,0.0,           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    0.0,37.5,0.0,            !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    0.0,37.5,3.75;           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+
+  BuildingSurface:Detailed,
+    Par3_Dorm2,              !- Name 
+    Wall,                    !- Surface Type 
+    Parede Interna,          !- Construction Name 
+    Dorm2,                   !- Zone Name 
+    Surface,                 !- Outside Boundary Condition 
+    Par12_Sala,              !- Outside Boundary Condition Object 
+    NoSun,                   !- Sun Exposure 
+    NoWind,                  !- Wind Exposure 
+    ,                        !- View Factor to Ground 
+    4.0,                     !- Number of Vertices 
+    0.0,0.0,3.75,            !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    0.0,0.0,0.0,             !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    25.0,0.0,0.0,            !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    25.0,0.0,3.75;           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+
+  BuildingSurface:Detailed,
+    Par2_Dorm2,              !- Name 
+    Wall,                    !- Surface Type 
+    Parede Interna,          !- Construction Name 
+    Dorm2,                   !- Zone Name 
+    Surface,                 !- Outside Boundary Condition 
+    Par4_Dorm3,              !- Outside Boundary Condition Object 
+    NoSun,                   !- Sun Exposure 
+    NoWind,                  !- Wind Exposure 
+    ,                        !- View Factor to Ground 
+    4.0,                     !- Number of Vertices 
+    25.0,0.0,3.75,           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    25.0,0.0,0.0,            !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    25.0,37.5,0.0,           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    25.0,37.5,3.75;          !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+
+  BuildingSurface:Detailed,
+    Par4_Dorm2,              !- Name 
+    Wall,                    !- Surface Type 
+    Parede Interna,          !- Construction Name 
+    Dorm2,                   !- Zone Name 
+    Surface,                 !- Outside Boundary Condition 
+    Par2_Dorm1,              !- Outside Boundary Condition Object 
+    NoSun,                   !- Sun Exposure 
+    NoWind,                  !- Wind Exposure 
+    ,                        !- View Factor to Ground 
+    4.0,                     !- Number of Vertices 
+    0.0,37.5,3.75,           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    0.0,37.5,0.0,            !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    0.0,0.0,0.0,             !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    0.0,0.0,3.75;            !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+
+  BuildingSurface:Detailed,
+    Chao_Dorm3,              !- Name 
+    Floor,                   !- Surface Type 
+    Interior Floor,          !- Construction Name 
+    Dorm3,                   !- Zone Name 
+    Adiabatic,               !- Outside Boundary Condition 
+    ,                        !- Outside Boundary Condition Object 
+    NoSun,                   !- Sun Exposure 
+    NoWind,                  !- Wind Exposure 
+    ,                        !- View Factor to Ground 
+    4.0,                     !- Number of Vertices 
+    25.0,37.5,0.0,           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    25.0,0.0,0.0,            !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    0.0,0.0,0.0,             !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    0.0,37.5,0.0;            !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+
+  BuildingSurface:Detailed,
+    Teto_Dorm3,              !- Name 
+    Ceiling,                 !- Surface Type 
+    InteriorCeiling,         !- Construction Name 
+    Dorm3,                   !- Zone Name 
+    Adiabatic,               !- Outside Boundary Condition 
+    ,                        !- Outside Boundary Condition Object 
+    NoSun,                   !- Sun Exposure 
+    NoWind,                  !- Wind Exposure 
+    ,                        !- View Factor to Ground 
+    4.0,                     !- Number of Vertices 
+    0.0,37.5,3.75,           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    0.0,0.0,3.75,            !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    25.0,0.0,3.75,           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    25.0,37.5,3.75;          !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+
+  BuildingSurface:Detailed,
+    Par1_Dorm3,              !- Name 
+    Wall,                    !- Surface Type 
+    Parede22,       !- Construction Name 
+    Dorm3,                   !- Zone Name 
+    Outdoors,                !- Outside Boundary Condition 
+    ,                        !- Outside Boundary Condition Object 
+    SunExposed,              !- Sun Exposure 
+    WindExposed,             !- Wind Exposure 
+    ,                        !- View Factor to Ground 
+    4.0,                     !- Number of Vertices 
+    25.0,37.5,3.75,          !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    25.0,37.5,0.0,           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    0.0,37.5,0.0,            !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    0.0,37.5,3.75;           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+
+  BuildingSurface:Detailed,
+    Par3_Dorm3,              !- Name 
+    Wall,                    !- Surface Type 
+    Parede Interna,          !- Construction Name 
+    Dorm3,                   !- Zone Name 
+    Surface,                 !- Outside Boundary Condition 
+    Par13_Sala,              !- Outside Boundary Condition Object 
+    NoSun,                   !- Sun Exposure 
+    NoWind,                  !- Wind Exposure 
+    ,                        !- View Factor to Ground 
+    4.0,                     !- Number of Vertices 
+    0.0,0.0,3.75,            !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    0.0,0.0,0.0,             !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    25.0,0.0,0.0,            !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    25.0,0.0,3.75;           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+
+  BuildingSurface:Detailed,
+    Par2_Dorm3,              !- Name 
+    Wall,                    !- Surface Type 
+    Parede22,       !- Construction Name 
+    Dorm3,                   !- Zone Name 
+    Outdoors,                !- Outside Boundary Condition 
+    ,                        !- Outside Boundary Condition Object 
+    SunExposed,              !- Sun Exposure 
+    WindExposed,             !- Wind Exposure 
+    ,                        !- View Factor to Ground 
+    4.0,                     !- Number of Vertices 
+    25.0,0.0,3.75,           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    25.0,0.0,0.0,            !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    25.0,37.5,0.0,           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    25.0,37.5,3.75;          !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+
+  BuildingSurface:Detailed,
+    Par4_Dorm3,              !- Name 
+    Wall,                    !- Surface Type 
+    Parede Interna,          !- Construction Name 
+    Dorm3,                   !- Zone Name 
+    Surface,                 !- Outside Boundary Condition 
+    Par2_Dorm2,              !- Outside Boundary Condition Object 
+    NoSun,                   !- Sun Exposure 
+    NoWind,                  !- Wind Exposure 
+    ,                        !- View Factor to Ground 
+    4.0,                     !- Number of Vertices 
+    0.0,37.5,3.75,           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    0.0,37.5,0.0,            !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    0.0,0.0,0.0,             !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    0.0,0.0,3.75;            !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+
+  BuildingSurface:Detailed,
+    Chao_Sala,               !- Name 
+    Floor,                   !- Surface Type 
+    Interior Floor,          !- Construction Name 
+    Sala,                    !- Zone Name 
+    Adiabatic,               !- Outside Boundary Condition 
+    ,                        !- Outside Boundary Condition Object 
+    NoSun,                   !- Sun Exposure 
+    NoWind,                  !- Wind Exposure 
+    ,                        !- View Factor to Ground 
+    4.0,                     !- Number of Vertices 
+    75.0,37.5,0.0,           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    75.0,0.0,0.0,            !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    0.0,0.0,0.0,             !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    0.0,37.5,0.0;            !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+
+  BuildingSurface:Detailed,
+    Teto_Sala,               !- Name 
+    Ceiling,                 !- Surface Type 
+    InteriorCeiling,         !- Construction Name 
+    Sala,                    !- Zone Name 
+    Adiabatic,               !- Outside Boundary Condition 
+    ,                        !- Outside Boundary Condition Object 
+    NoSun,                   !- Sun Exposure 
+    NoWind,                  !- Wind Exposure 
+    ,                        !- View Factor to Ground 
+    4.0,                     !- Number of Vertices 
+    0.0,37.5,3.75,           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    0.0,0.0,3.75,            !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    75.0,0.0,3.75,           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    75.0,37.5,3.75;          !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+
+  BuildingSurface:Detailed,
+    Par11_Sala,              !- Name 
+    Wall,                    !- Surface Type 
+    Parede Interna,          !- Construction Name 
+    Sala,                    !- Zone Name 
+    Surface,                 !- Outside Boundary Condition 
+    Par3_Dorm1,              !- Outside Boundary Condition Object 
+    NoSun,                   !- Sun Exposure 
+    NoWind,                  !- Wind Exposure 
+    ,                        !- View Factor to Ground 
+    4.0,                     !- Number of Vertices 
+    25.0,37.5,3.75,          !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    25.0,37.5,0.0,           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    0.0,37.5,0.0,            !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    0.0,37.5,3.75;           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+
+  BuildingSurface:Detailed,
+    Par12_Sala,              !- Name 
+    Wall,                    !- Surface Type 
+    Parede Interna,          !- Construction Name 
+    Sala,                    !- Zone Name 
+    Surface,                 !- Outside Boundary Condition 
+    Par3_Dorm2,              !- Outside Boundary Condition Object 
+    NoSun,                   !- Sun Exposure 
+    NoWind,                  !- Wind Exposure 
+    ,                        !- View Factor to Ground 
+    4.0,                     !- Number of Vertices 
+    50.0,37.5,3.75,          !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    50.0,37.5,0.0,           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    25.0,37.5,0.0,           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    25.0,37.5,3.75;          !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+
+  BuildingSurface:Detailed,
+    Par13_Sala,              !- Name 
+    Wall,                    !- Surface Type 
+    Parede Interna,          !- Construction Name 
+    Sala,                    !- Zone Name 
+    Surface,                 !- Outside Boundary Condition 
+    Par3_Dorm3,              !- Outside Boundary Condition Object 
+    NoSun,                   !- Sun Exposure 
+    NoWind,                  !- Wind Exposure 
+    ,                        !- View Factor to Ground 
+    4.0,                     !- Number of Vertices 
+    75.0,37.5,3.75,          !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    75.0,37.5,0.0,           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    50.0,37.5,0.0,           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    50.0,37.5,3.75;          !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+
+  BuildingSurface:Detailed,
+    Par3_Sala,               !- Name 
+    Wall,                    !- Surface Type 
+    Parede22,       !- Construction Name 
+    Sala,                    !- Zone Name 
+    Outdoors,                !- Outside Boundary Condition 
+    ,                        !- Outside Boundary Condition Object 
+    SunExposed,              !- Sun Exposure 
+    WindExposed,             !- Wind Exposure 
+    ,                        !- View Factor to Ground 
+    4.0,                     !- Number of Vertices 
+    0.0,0.0,3.75,            !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    0.0,0.0,0.0,             !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    75.0,0.0,0.0,            !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    75.0,0.0,3.75;           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+
+  BuildingSurface:Detailed,
+    Par2_Sala,               !- Name 
+    Wall,                    !- Surface Type 
+    Parede22,       !- Construction Name 
+    Sala,                    !- Zone Name 
+    Outdoors,                !- Outside Boundary Condition 
+    ,                        !- Outside Boundary Condition Object 
+    SunExposed,              !- Sun Exposure 
+    WindExposed,             !- Wind Exposure 
+    ,                        !- View Factor to Ground 
+    4.0,                     !- Number of Vertices 
+    75.0,0.0,3.75,           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    75.0,0.0,0.0,            !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    75.0,37.5,0.0,           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    75.0,37.5,3.75;          !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+
+  BuildingSurface:Detailed,
+    Par4_Sala,               !- Name 
+    Wall,                    !- Surface Type 
+    Parede22,       !- Construction Name 
+    Sala,                    !- Zone Name 
+    Outdoors,                !- Outside Boundary Condition 
+    ,                        !- Outside Boundary Condition Object 
+    SunExposed,              !- Sun Exposure 
+    WindExposed,             !- Wind Exposure 
+    ,                        !- View Factor to Ground 
+    4.0,                     !- Number of Vertices 
+    0.0,37.5,3.75,           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    0.0,37.5,0.0,            !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    0.0,0.0,0.0,             !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    0.0,0.0,3.75;            !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+
+  FenestrationSurface:Detailed,
+    JanDO,                   !- Name 
+    Window,                  !- Surface Type 
+    Vid1,               !- Construction Name 
+    Par4_Dorm1,              !- Building Surface Name 
+    ,                        !- Outside Boundary Condition Object 
+    ,                        !- View Factor to Ground 
+    Veneziana_D1,            !- Shading Control Name 
+    ,                        !- Frame and Divider Name 
+    ,                        !- Multiplier 
+    4.0,                     !- Number of Vertices 
+    0.0,37.5,2.8125,         !- Vertex 1 X-coordinate {m},Vertex 1 Y-coordinate {m},Vertex 1 Z-coordinate {m}
+    0.0,37.5,0.9375,         !- Vertex 2 X-coordinate {m},Vertex 2 Y-coordinate {m},Vertex 2 Z-coordinate {m}
+    0.0,0.0,0.9375,          !- Vertex 3 X-coordinate {m},Vertex 3 Y-coordinate {m},Vertex 3 Z-coordinate {m}
+    0.0,0.0,2.8125;          !- Vertex 4 X-coordinate {m},Vertex 4 Y-coordinate {m},Vertex 4 Z-coordinate {m}
+
+  FenestrationSurface:Detailed,
+    JanDL,                   !- Name 
+    Window,                  !- Surface Type 
+    Vid1,               !- Construction Name 
+    Par2_Dorm3,              !- Building Surface Name 
+    ,                        !- Outside Boundary Condition Object 
+    ,                        !- View Factor to Ground 
+    Veneziana_D3,            !- Shading Control Name 
+    ,                        !- Frame and Divider Name 
+    ,                        !- Multiplier 
+    4.0,                     !- Number of Vertices 
+    25.0,0.0,2.8125,         !- Vertex 1 X-coordinate {m},Vertex 1 Y-coordinate {m},Vertex 1 Z-coordinate {m}
+    25.0,0.0,0.9375,         !- Vertex 2 X-coordinate {m},Vertex 2 Y-coordinate {m},Vertex 2 Z-coordinate {m}
+    25.0,37.5,0.9375,        !- Vertex 3 X-coordinate {m},Vertex 3 Y-coordinate {m},Vertex 3 Z-coordinate {m}
+    25.0,37.5,2.8125;        !- Vertex 4 X-coordinate {m},Vertex 4 Y-coordinate {m},Vertex 4 Z-coordinate {m}
+
+  FenestrationSurface:Detailed,
+    JanDN1,                  !- Name 
+    Window,                  !- Surface Type 
+    Vid1,               !- Construction Name 
+    Par1_Dorm1,              !- Building Surface Name 
+    ,                        !- Outside Boundary Condition Object 
+    ,                        !- View Factor to Ground 
+    Veneziana_D1,            !- Shading Control Name 
+    ,                        !- Frame and Divider Name 
+    ,                        !- Multiplier 
+    4.0,                     !- Number of Vertices 
+    25.0,37.5,2.8125,        !- Vertex 1 X-coordinate {m},Vertex 1 Y-coordinate {m},Vertex 1 Z-coordinate {m}
+    25.0,37.5,0.9375,        !- Vertex 2 X-coordinate {m},Vertex 2 Y-coordinate {m},Vertex 2 Z-coordinate {m}
+    0.0,37.5,0.9375,         !- Vertex 3 X-coordinate {m},Vertex 3 Y-coordinate {m},Vertex 3 Z-coordinate {m}
+    0.0,37.5,2.8125;         !- Vertex 4 X-coordinate {m},Vertex 4 Y-coordinate {m},Vertex 4 Z-coordinate {m}
+
+  FenestrationSurface:Detailed,
+    JanDN2,                  !- Name 
+    Window,                  !- Surface Type 
+    Vid1,               !- Construction Name 
+    Par1_Dorm2,              !- Building Surface Name 
+    ,                        !- Outside Boundary Condition Object 
+    ,                        !- View Factor to Ground 
+    Veneziana_D2,            !- Shading Control Name 
+    ,                        !- Frame and Divider Name 
+    ,                        !- Multiplier 
+    4.0,                     !- Number of Vertices 
+    25.0,37.5,2.8125,        !- Vertex 1 X-coordinate {m},Vertex 1 Y-coordinate {m},Vertex 1 Z-coordinate {m}
+    25.0,37.5,0.9375,        !- Vertex 2 X-coordinate {m},Vertex 2 Y-coordinate {m},Vertex 2 Z-coordinate {m}
+    0.0,37.5,0.9375,         !- Vertex 3 X-coordinate {m},Vertex 3 Y-coordinate {m},Vertex 3 Z-coordinate {m}
+    0.0,37.5,2.8125;         !- Vertex 4 X-coordinate {m},Vertex 4 Y-coordinate {m},Vertex 4 Z-coordinate {m}
+
+  FenestrationSurface:Detailed,
+    JanDN3,                  !- Name 
+    Window,                  !- Surface Type 
+    Vid1,               !- Construction Name 
+    Par1_Dorm3,              !- Building Surface Name 
+    ,                        !- Outside Boundary Condition Object 
+    ,                        !- View Factor to Ground 
+    Veneziana_D3,            !- Shading Control Name 
+    ,                        !- Frame and Divider Name 
+    ,                        !- Multiplier 
+    4.0,                     !- Number of Vertices 
+    25.0,37.5,2.8125,        !- Vertex 1 X-coordinate {m},Vertex 1 Y-coordinate {m},Vertex 1 Z-coordinate {m}
+    25.0,37.5,0.9375,        !- Vertex 2 X-coordinate {m},Vertex 2 Y-coordinate {m},Vertex 2 Z-coordinate {m}
+    0.0,37.5,0.9375,         !- Vertex 3 X-coordinate {m},Vertex 3 Y-coordinate {m},Vertex 3 Z-coordinate {m}
+    0.0,37.5,2.8125;         !- Vertex 4 X-coordinate {m},Vertex 4 Y-coordinate {m},Vertex 4 Z-coordinate {m}
+
+  FenestrationSurface:Detailed,
+    JanSO,                   !- Name 
+    Window,                  !- Surface Type 
+    Vid1,               !- Construction Name 
+    Par4_Sala,               !- Building Surface Name 
+    ,                        !- Outside Boundary Condition Object 
+    ,                        !- View Factor to Ground 
+    Veneziana_Sala,          !- Shading Control Name 
+    ,                        !- Frame and Divider Name 
+    ,                        !- Multiplier 
+    4.0,                     !- Number of Vertices 
+    0.0,37.5,2.8125,         !- Vertex 1 X-coordinate {m},Vertex 1 Y-coordinate {m},Vertex 1 Z-coordinate {m}
+    0.0,37.5,0.9375,         !- Vertex 2 X-coordinate {m},Vertex 2 Y-coordinate {m},Vertex 2 Z-coordinate {m}
+    0.0,0.0,0.9375,          !- Vertex 3 X-coordinate {m},Vertex 3 Y-coordinate {m},Vertex 3 Z-coordinate {m}
+    0.0,0.0,2.8125;          !- Vertex 4 X-coordinate {m},Vertex 4 Y-coordinate {m},Vertex 4 Z-coordinate {m}
+
+  FenestrationSurface:Detailed,
+    JanSL,                   !- Name 
+    Window,                  !- Surface Type 
+    Vid1,               !- Construction Name 
+    Par2_Sala,               !- Building Surface Name 
+    ,                        !- Outside Boundary Condition Object 
+    ,                        !- View Factor to Ground 
+    Veneziana_Sala,          !- Shading Control Name 
+    ,                        !- Frame and Divider Name 
+    ,                        !- Multiplier 
+    4.0,                     !- Number of Vertices 
+    75.0,0.0,2.8125,         !- Vertex 1 X-coordinate {m},Vertex 1 Y-coordinate {m},Vertex 1 Z-coordinate {m}
+    75.0,0.0,0.9375,         !- Vertex 2 X-coordinate {m},Vertex 2 Y-coordinate {m},Vertex 2 Z-coordinate {m}
+    75.0,37.5,0.9375,        !- Vertex 3 X-coordinate {m},Vertex 3 Y-coordinate {m},Vertex 3 Z-coordinate {m}
+    75.0,37.5,2.8125;        !- Vertex 4 X-coordinate {m},Vertex 4 Y-coordinate {m},Vertex 4 Z-coordinate {m}
+
+  FenestrationSurface:Detailed,
+    JanSS,                   !- Name 
+    Window,                  !- Surface Type 
+    Vid1,               !- Construction Name 
+    Par3_Sala,               !- Building Surface Name 
+    ,                        !- Outside Boundary Condition Object 
+    ,                        !- View Factor to Ground 
+    Veneziana_Sala,          !- Shading Control Name 
+    ,                        !- Frame and Divider Name 
+    ,                        !- Multiplier 
+    4.0,                     !- Number of Vertices 
+    0.0,0.0,2.8125,          !- Vertex 1 X-coordinate {m},Vertex 1 Y-coordinate {m},Vertex 1 Z-coordinate {m}
+    0.0,0.0,0.9375,          !- Vertex 2 X-coordinate {m},Vertex 2 Y-coordinate {m},Vertex 2 Z-coordinate {m}
+    75.0,0.0,0.9375,         !- Vertex 3 X-coordinate {m},Vertex 3 Y-coordinate {m},Vertex 3 Z-coordinate {m}
+    75.0,0.0,2.8125;         !- Vertex 4 X-coordinate {m},Vertex 4 Y-coordinate {m},Vertex 4 Z-coordinate {m}
+
+  FenestrationSurface:Detailed,
+    PortaD1,                 !- Name 
+    Door,                    !- Surface Type 
+    Porta,                   !- Construction Name 
+    Par3_Dorm1,              !- Building Surface Name 
+    PortaS1,                 !- Outside Boundary Condition Object 
+    ,                        !- View Factor to Ground 
+    ,                        !- Shading Control Name 
+    ,                        !- Frame and Divider Name 
+    ,                        !- Multiplier 
+    4.0,                     !- Number of Vertices 
+    12.1,0.0,2.1,            !- Vertex 1 X-coordinate {m},Vertex 1 Y-coordinate {m},Vertex 1 Z-coordinate {m}
+    12.1,0.0,0.0,            !- Vertex 2 X-coordinate {m},Vertex 2 Y-coordinate {m},Vertex 2 Z-coordinate {m}
+    12.9,0.0,0.0,            !- Vertex 3 X-coordinate {m},Vertex 3 Y-coordinate {m},Vertex 3 Z-coordinate {m}
+    12.9,0.0,2.1;            !- Vertex 4 X-coordinate {m},Vertex 4 Y-coordinate {m},Vertex 4 Z-coordinate {m}
+
+  FenestrationSurface:Detailed,
+    PortaD2,                 !- Name 
+    Door,                    !- Surface Type 
+    Porta,                   !- Construction Name 
+    Par3_Dorm2,              !- Building Surface Name 
+    PortaS2,                 !- Outside Boundary Condition Object 
+    ,                        !- View Factor to Ground 
+    ,                        !- Shading Control Name 
+    ,                        !- Frame and Divider Name 
+    ,                        !- Multiplier 
+    4.0,                     !- Number of Vertices 
+    12.1,0.0,2.1,            !- Vertex 1 X-coordinate {m},Vertex 1 Y-coordinate {m},Vertex 1 Z-coordinate {m}
+    12.1,0.0,0.0,            !- Vertex 2 X-coordinate {m},Vertex 2 Y-coordinate {m},Vertex 2 Z-coordinate {m}
+    12.9,0.0,0.0,            !- Vertex 3 X-coordinate {m},Vertex 3 Y-coordinate {m},Vertex 3 Z-coordinate {m}
+    12.9,0.0,2.1;            !- Vertex 4 X-coordinate {m},Vertex 4 Y-coordinate {m},Vertex 4 Z-coordinate {m}
+
+  FenestrationSurface:Detailed,
+    PortaD3,                 !- Name 
+    Door,                    !- Surface Type 
+    Porta,                   !- Construction Name 
+    Par3_Dorm3,              !- Building Surface Name 
+    PortaS3,                 !- Outside Boundary Condition Object 
+    ,                        !- View Factor to Ground 
+    ,                        !- Shading Control Name 
+    ,                        !- Frame and Divider Name 
+    ,                        !- Multiplier 
+    4.0,                     !- Number of Vertices 
+    12.1,0.0,2.1,            !- Vertex 1 X-coordinate {m},Vertex 1 Y-coordinate {m},Vertex 1 Z-coordinate {m}
+    12.1,0.0,0.0,            !- Vertex 2 X-coordinate {m},Vertex 2 Y-coordinate {m},Vertex 2 Z-coordinate {m}
+    12.9,0.0,0.0,            !- Vertex 3 X-coordinate {m},Vertex 3 Y-coordinate {m},Vertex 3 Z-coordinate {m}
+    12.9,0.0,2.1;            !- Vertex 4 X-coordinate {m},Vertex 4 Y-coordinate {m},Vertex 4 Z-coordinate {m}
+
+  FenestrationSurface:Detailed,
+    PortaS1,                 !- Name 
+    Door,                    !- Surface Type 
+    Porta,                   !- Construction Name 
+    Par11_Sala,              !- Building Surface Name 
+    PortaD1,                 !- Outside Boundary Condition Object 
+    ,                        !- View Factor to Ground 
+    ,                        !- Shading Control Name 
+    ,                        !- Frame and Divider Name 
+    ,                        !- Multiplier 
+    4.0,                     !- Number of Vertices 
+    12.9,37.5,2.1,           !- Vertex 1 X-coordinate {m},Vertex 1 Y-coordinate {m},Vertex 1 Z-coordinate {m}
+    12.9,37.5,0.0,           !- Vertex 2 X-coordinate {m},Vertex 2 Y-coordinate {m},Vertex 2 Z-coordinate {m}
+    12.1,37.5,0.0,           !- Vertex 3 X-coordinate {m},Vertex 3 Y-coordinate {m},Vertex 3 Z-coordinate {m}
+    12.1,37.5,2.1;           !- Vertex 4 X-coordinate {m},Vertex 4 Y-coordinate {m},Vertex 4 Z-coordinate {m}
+
+  FenestrationSurface:Detailed,
+    PortaS2,                 !- Name 
+    Door,                    !- Surface Type 
+    Porta,                   !- Construction Name 
+    Par12_Sala,              !- Building Surface Name 
+    PortaD2,                 !- Outside Boundary Condition Object 
+    ,                        !- View Factor to Ground 
+    ,                        !- Shading Control Name 
+    ,                        !- Frame and Divider Name 
+    ,                        !- Multiplier 
+    4.0,                     !- Number of Vertices 
+    37.9,37.5,2.1,           !- Vertex 1 X-coordinate {m},Vertex 1 Y-coordinate {m},Vertex 1 Z-coordinate {m}
+    37.9,37.5,0.0,           !- Vertex 2 X-coordinate {m},Vertex 2 Y-coordinate {m},Vertex 2 Z-coordinate {m}
+    37.1,37.5,0.0,           !- Vertex 3 X-coordinate {m},Vertex 3 Y-coordinate {m},Vertex 3 Z-coordinate {m}
+    37.1,37.5,2.1;           !- Vertex 4 X-coordinate {m},Vertex 4 Y-coordinate {m},Vertex 4 Z-coordinate {m}
+
+  FenestrationSurface:Detailed,
+    PortaS3,                 !- Name 
+    Door,                    !- Surface Type 
+    Porta,                   !- Construction Name 
+    Par13_Sala,              !- Building Surface Name 
+    PortaD3,                 !- Outside Boundary Condition Object 
+    ,                        !- View Factor to Ground 
+    ,                        !- Shading Control Name 
+    ,                        !- Frame and Divider Name 
+    ,                        !- Multiplier 
+    4.0,                     !- Number of Vertices 
+    62.9,37.5,2.1,           !- Vertex 1 X-coordinate {m},Vertex 1 Y-coordinate {m},Vertex 1 Z-coordinate {m}
+    62.9,37.5,0.0,           !- Vertex 2 X-coordinate {m},Vertex 2 Y-coordinate {m},Vertex 2 Z-coordinate {m}
+    62.1,37.5,0.0,           !- Vertex 3 X-coordinate {m},Vertex 3 Y-coordinate {m},Vertex 3 Z-coordinate {m}
+    62.1,37.5,2.1;           !- Vertex 4 X-coordinate {m},Vertex 4 Y-coordinate {m},Vertex 4 Z-coordinate {m}
+
+  Shading:Building:Detailed,
+    ShadingSurfaceLeste,     !- Name 
+    ,                        !- Transmittance Schedule Name 
+    4.0,                     !- Number of Vertices 
+    76.0,0.0,18.75,          !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    76.0,75.0,18.75,         !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    75.0,75.0,18.75,         !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    75.0,0.0,18.75;          !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+
+  Shading:Building:Detailed,
+    ShadingSurfaceOeste,     !- Name 
+    ,                        !- Transmittance Schedule Name 
+    4.0,                     !- Number of Vertices 
+    0.0,75.0,18.75,          !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    0.0,0.0,18.75,           !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    -1.0,0.0,18.75,          !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    -1.0,75.0,18.75;         !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+
+  Shading:Building:Detailed,
+    ShadingSurfaceNorte,     !- Name 
+    ,                        !- Transmittance Schedule Name 
+    4.0,                     !- Number of Vertices 
+    76.0,76.0,18.75,         !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    76.0,75.0,18.75,         !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    -1.0,75.0,18.75,         !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    -1.0,76.0,18.75;         !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+
+  Shading:Building:Detailed,
+    ShadingSurfaceSul,       !- Name 
+    ,                        !- Transmittance Schedule Name 
+    4.0,                     !- Number of Vertices 
+    76.0,0.0,18.75,          !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    76.0,-1.0,18.75,         !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    -1.0,-1.0,18.75,         !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+    -1.0,0.0,18.75;          !- Vertex 1 X-coordinate m,Vertex 1 Y-coordinate m,Vertex 1 Z-coordinate m
+
+  Zone,
+    Dorm1,                   !- Name 
+    0.0,                     !- Direction of Relative North {deg}
+    0.0,37.5,15.0,           !- X Origin {m},Y Origin {m},Z Origin {m}
+    ,                        !- Type 
+    1;                       !- Multiplier 
+
+  Zone,
+    Dorm2,                   !- Name 
+    0.0,                     !- Direction of Relative North {deg}
+    25.0,37.5,15.0,          !- X Origin {m},Y Origin {m},Z Origin {m}
+    ,                        !- Type 
+    1;                       !- Multiplier 
+
+  Zone,
+    Dorm3,                   !- Name 
+    0.0,                     !- Direction of Relative North {deg}
+    50.0,37.5,15.0,          !- X Origin {m},Y Origin {m},Z Origin {m}
+    ,                        !- Type 
+    1;                       !- Multiplier 
+
+  Zone,
+    Sala,                    !- Name 
+    0.0,                     !- Direction of Relative North {deg}
+    0.0,0.0,15.0,            !- X Origin {m},Y Origin {m},Z Origin {m}
+    ,                        !- Type 
+    1;                       !- Multiplier 
+
+!-   ===========  ALL OBJECTS OF GROUP: Internal Gains  ===========
+
+  People,
+    Dormitorio1,             !- Name 
+    Dorm1,                   !- Zone or ZoneList Name 
+    OcupDorm,                !- Number of People Schedule Name 
+    People,                  !- Number of People Calculation Method 
+    2.0,                     !- Number of People 
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.5,                     !- Fraction Radiant 
+    ,                        !- Sensible Heat Fraction 
+    AtivDorm;                !- Activity Level Schedule Name 
+
+  People,
+    Dormitorio2,             !- Name 
+    Dorm2,                   !- Zone or ZoneList Name 
+    OcupDorm,                !- Number of People Schedule Name 
+    People,                  !- Number of People Calculation Method 
+    2.0,                     !- Number of People 
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.5,                     !- Fraction Radiant 
+    ,                        !- Sensible Heat Fraction 
+    AtivDorm;                !- Activity Level Schedule Name 
+
+  People,
+    Dormitorio3,             !- Name 
+    Dorm3,                   !- Zone or ZoneList Name 
+    OcupDorm,                !- Number of People Schedule Name 
+    People,                  !- Number of People Calculation Method 
+    2.0,                     !- Number of People 
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.5,                     !- Fraction Radiant 
+    ,                        !- Sensible Heat Fraction 
+    AtivDorm;                !- Activity Level Schedule Name 
+
+  People,
+    Sala,                    !- Name 
+    Sala,                    !- Zone or ZoneList Name 
+    OcupSala,                !- Number of People Schedule Name 
+    People,                  !- Number of People Calculation Method 
+    4.0,                     !- Number of People 
+    ,                        !- People per Zone Floor Area {person/m2}
+    ,                        !- Zone Floor Area per Person {m2/person}
+    0.5,                     !- Fraction Radiant 
+    ,                        !- Sensible Heat Fraction 
+    AtivSala;                !- Activity Level Schedule Name 
+
+  Lights,
+    DormitorioLights,        !- Name 
+    Dorms,                   !- Zone or ZoneList Name 
+    IlumDorm1,               !- Schedule Name 
+    Watts/Area,              !- Design Level Calculation Method 
+    ,                        !- Lighting Level {W}
+    5.0,                     !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0.0,                     !- Return Air Fraction 
+    0.42,                    !- Fraction Radiant 
+    0.18,                    !- Fraction Visible 
+    0.0,                     !- Fraction Replaceable 
+    GeneralLights;           !- End-Use Subcategory 
+
+  Lights,
+    Sala,                    !- Name 
+    Sala,                    !- Zone or ZoneList Name 
+    IlumSala,                !- Schedule Name 
+    Watts/Area,              !- Design Level Calculation Method 
+    ,                        !- Lighting Level {W}
+    5.0,                     !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0.0,                     !- Return Air Fraction 
+    0.42,                    !- Fraction Radiant 
+    0.18,                    !- Fraction Visible 
+    0.0,                     !- Fraction Replaceable 
+    GeneralLights;           !- End-Use Subcategory 
+
+  ElectricEquipment,
+    Sala,                    !- Name 
+    Sala,                    !- Zone or ZoneList Name 
+    EquipSala,               !- Schedule Name 
+    EquipmentLevel,          !- Design Level Calculation Method 
+    120.0,                   !- Design Level {W}
+    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0.0,                     !- Fraction Latent 
+    0.5,                     !- Fraction Radiant 
+    0.0,                     !- Fraction Lost 
+    General;                 !- End-Use Subcategory 
+
+!-   ===========  ALL OBJECTS OF GROUP: Natural Ventilation and Duct Leakage  ===========
+
+  AirflowNetwork:MultiZone:Component:DetailedOpening,
+    Porta,                   !- Name 
+    0.001,                   !- Air Mass Flow Coefficient When Opening is Closed {kg/s-m}
+    0.66,                    !- Air Mass Flow Exponent When Opening is Closed {dimensionless}
+    NonPivoted,              !- Type of Rectangular Large Vertical Opening (LVO) 
+    0.0,                     !- Extra Crack Length or Height of Pivoting Axis {m}
+    2,                       !- Number of Sets of Opening Factor Data 
+    0.0,                     !- Opening Factor 1 {dimensionless}
+    0.001,                   !- Discharge Coefficient for Opening Factor 1 {dimensionless}
+    0.0,                     !- Width Factor for Opening Factor 1 {dimensionless}
+    1.0,                     !- Height Factor for Opening Factor 1 {dimensionless}
+    0.0,                     !- Start Height Factor for Opening Factor 1 {dimensionless}
+    1.0,                     !- Opening Factor 2 {dimensionless}
+    0.65,                    !- Discharge Coefficient for Opening Factor 2 {dimensionless}
+    1.0,                     !- Width Factor for Opening Factor 2 {dimensionless}
+    1.0,                     !- Height Factor for Opening Factor 2 {dimensionless}
+    0.0;                     !- Start Height Factor for Opening Factor 2 {dimensionless}
+
+  AirflowNetwork:MultiZone:Component:DetailedOpening,
+    Janela,                  !- Name 
+    0.001,                   !- Air Mass Flow Coefficient When Opening is Closed {kg/s-m}
+    0.66,                    !- Air Mass Flow Exponent When Opening is Closed {dimensionless}
+    HorizontallyPivoted,     !- Type of Rectangular Large Vertical Opening (LVO) 
+    0.0,                     !- Extra Crack Length or Height of Pivoting Axis {m}
+    2,                       !- Number of Sets of Opening Factor Data 
+    0.0,                     !- Opening Factor 1 {dimensionless}
+    0.001,                   !- Discharge Coefficient for Opening Factor 1 {dimensionless}
+    0.0,                     !- Width Factor for Opening Factor 1 {dimensionless}
+    1.0,                     !- Height Factor for Opening Factor 1 {dimensionless}
+    0.0,                     !- Start Height Factor for Opening Factor 1 {dimensionless}
+    1.0,                     !- Opening Factor 2 {dimensionless}
+    0.65,                    !- Discharge Coefficient for Opening Factor 2 {dimensionless}
+    0.5,                     !- Width Factor for Opening Factor 2 {dimensionless}
+    1.0,                     !- Height Factor for Opening Factor 2 {dimensionless}
+    0.0;                     !- Start Height Factor for Opening Factor 2 {dimensionless}
+
+  AirflowNetwork:MultiZone:Zone,
+    Dorm1,                   !- Zone Name 
+    Constant,                !- Ventilation Control Mode 
+    ,                        !- Ventilation Control Zone Temperature Setpoint Schedule Name 
+    ,                        !- Minimum Venting Open Factor {dimensionless}
+    ,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor {deltaC}
+    ,                        !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor {deltaC}
+    ,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor {deltaJ/kg}
+    ,                        !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor {deltaJ/kg}
+    VN_Dorm1;                !- Venting Availability Schedule Name 
+
+  AirflowNetwork:MultiZone:Zone,
+    Dorm2,                   !- Zone Name 
+    Constant,                !- Ventilation Control Mode 
+    ,                        !- Ventilation Control Zone Temperature Setpoint Schedule Name 
+    ,                        !- Minimum Venting Open Factor {dimensionless}
+    ,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor {deltaC}
+    ,                        !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor {deltaC}
+    ,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor {deltaJ/kg}
+    ,                        !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor {deltaJ/kg}
+    VN_Dorm2;                !- Venting Availability Schedule Name 
+
+  AirflowNetwork:MultiZone:Zone,
+    Dorm3,                   !- Zone Name 
+    Constant,                !- Ventilation Control Mode 
+    ,                        !- Ventilation Control Zone Temperature Setpoint Schedule Name 
+    ,                        !- Minimum Venting Open Factor {dimensionless}
+    ,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor {deltaC}
+    ,                        !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor {deltaC}
+    ,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor {deltaJ/kg}
+    ,                        !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor {deltaJ/kg}
+    VN_Dorm3;                !- Venting Availability Schedule Name 
+
+  AirflowNetwork:MultiZone:Zone,
+    Sala,                    !- Zone Name 
+    Constant,                !- Ventilation Control Mode 
+    ,                        !- Ventilation Control Zone Temperature Setpoint Schedule Name 
+    ,                        !- Minimum Venting Open Factor {dimensionless}
+    ,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor {deltaC}
+    ,                        !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor {deltaC}
+    ,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor {deltaJ/kg}
+    ,                        !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor {deltaJ/kg}
+    VN_Sala;                 !- Venting Availability Schedule Name 
+
+  AirflowNetwork:MultiZone:Surface,
+    JanDO,                   !- Surface Name 
+    Janela,                  !- Leakage Component Name 
+    ,                        !- External Node Name 
+    0.1,             !- Window/Door Opening Factor, or Crack Factor {dimensionless}
+    ZoneLevel;               !- Ventilation Control Mode 
+
+  AirflowNetwork:MultiZone:Surface,
+    JanDL,                   !- Surface Name 
+    Janela,                  !- Leakage Component Name 
+    ,                        !- External Node Name 
+    0.1,             !- Window/Door Opening Factor, or Crack Factor {dimensionless}
+    ZoneLevel;               !- Ventilation Control Mode 
+
+  AirflowNetwork:MultiZone:Surface,
+    JanDN1,                  !- Surface Name 
+    Janela,                  !- Leakage Component Name 
+    ,                        !- External Node Name 
+    0.1,             !- Window/Door Opening Factor, or Crack Factor {dimensionless}
+    ZoneLevel;               !- Ventilation Control Mode 
+
+  AirflowNetwork:MultiZone:Surface,
+    JanDN2,                  !- Surface Name 
+    Janela,                  !- Leakage Component Name 
+    ,                        !- External Node Name 
+    0.1,             !- Window/Door Opening Factor, or Crack Factor {dimensionless}
+    ZoneLevel;               !- Ventilation Control Mode 
+
+  AirflowNetwork:MultiZone:Surface,
+    JanDN3,                  !- Surface Name 
+    Janela,                  !- Leakage Component Name 
+    ,                        !- External Node Name 
+    0.1,             !- Window/Door Opening Factor, or Crack Factor {dimensionless}
+    ZoneLevel;               !- Ventilation Control Mode 
+
+  AirflowNetwork:MultiZone:Surface,
+    JanSO,                   !- Surface Name 
+    Janela,                  !- Leakage Component Name 
+    ,                        !- External Node Name 
+    0.1,             !- Window/Door Opening Factor, or Crack Factor {dimensionless}
+    ZoneLevel;               !- Ventilation Control Mode 
+
+  AirflowNetwork:MultiZone:Surface,
+    JanSL,                   !- Surface Name 
+    Janela,                  !- Leakage Component Name 
+    ,                        !- External Node Name 
+    0.1,             !- Window/Door Opening Factor, or Crack Factor {dimensionless}
+    ZoneLevel;               !- Ventilation Control Mode 
+
+  AirflowNetwork:MultiZone:Surface,
+    JanSS,                   !- Surface Name 
+    Janela,                  !- Leakage Component Name 
+    ,                        !- External Node Name 
+    0.1,             !- Window/Door Opening Factor, or Crack Factor {dimensionless}
+    ZoneLevel;               !- Ventilation Control Mode 
+
+  AirflowNetwork:MultiZone:Surface,
+    PortaD1,                 !- Surface Name 
+    Porta,                   !- Leakage Component Name 
+    ,                        !- External Node Name 
+    1.0,                     !- Window/Door Opening Factor, or Crack Factor {dimensionless}
+    novent;                  !- Ventilation Control Mode 
+
+  AirflowNetwork:MultiZone:Surface,
+    PortaD2,                 !- Surface Name 
+    Porta,                   !- Leakage Component Name 
+    ,                        !- External Node Name 
+    1.0,                     !- Window/Door Opening Factor, or Crack Factor {dimensionless}
+    novent;                  !- Ventilation Control Mode 
+
+  AirflowNetwork:MultiZone:Surface,
+    PortaD3,                 !- Surface Name 
+    Porta,                   !- Leakage Component Name 
+    ,                        !- External Node Name 
+    1.0,                     !- Window/Door Opening Factor, or Crack Factor {dimensionless}
+    novent;                  !- Ventilation Control Mode 
+
+  AirflowNetwork:MultiZone:Surface,
+    PortaS1,                 !- Surface Name 
+    Porta,                   !- Leakage Component Name 
+    ,                        !- External Node Name 
+    1.0,                     !- Window/Door Opening Factor, or Crack Factor {dimensionless}
+    novent;                  !- Ventilation Control Mode 
+
+  AirflowNetwork:MultiZone:Surface,
+    PortaS2,                 !- Surface Name 
+    Porta,                   !- Leakage Component Name 
+    ,                        !- External Node Name 
+    1.0,                     !- Window/Door Opening Factor, or Crack Factor {dimensionless}
+    novent;                  !- Ventilation Control Mode 
+
+  AirflowNetwork:MultiZone:Surface,
+    PortaS3,                 !- Surface Name 
+    Porta,                   !- Leakage Component Name 
+    ,                        !- External Node Name 
+    1.0,                     !- Window/Door Opening Factor, or Crack Factor {dimensionless}
+    novent;                  !- Ventilation Control Mode 
+
+  AirflowNetwork:SimulationControl,
+    VentNat-caso_0005.idf,   !- Name 
+    MultizoneWithoutDistribution,  !- AirflowNetwork Control 
+    ,                        !- Wind Pressure Coefficient Type 
+    ,                        !- AirflowNetwork Wind Pressure Coefficient Array Name 
+    Highrise,                !- Height Selection for Local Wind Pressure Calculation 
+    ,                        !- Building Type 
+    ,                        !- Maximum Number of Iterations {dimensionless}
+    ,                        !- Initialization Type 
+    ,                        !- Relative Airflow Convergence Tolerance {dimensionless}
+    ,                        !- Absolute Airflow Convergence Tolerance {kg/s}
+    0.0,                     !- Convergence Acceleration Limit {dimensionless}
+    1.0,                     !- Azimuth Angle of Long Axis of Building {deg}
+    ;                        !- Ratio of Building Width Along Short Axis to Width Along Long Axis 
+
+!-   ===========  ALL OBJECTS OF GROUP: HVAC Templates  ===========
+
+  HVACTemplate:Thermostat,
+    Termostato,              !- Name 
+    ,                        !- Heating Setpoint Schedule Name 
+    18.0,                    !- Constant Heating Setpoint {C}
+    ,                        !- Cooling Setpoint Schedule Name 
+    23.0;                    !- Constant Cooling Setpoint {C}
+
+  HVACTemplate:Zone:IdealLoadsAirSystem,
+    Dorm1,                   !- Zone Name 
+    Termostato,              !- Template Thermostat Name 
+    HVAC_Dorm1,              !- System Availability Schedule Name 
+    50.0,                    !- Maximum Heating Supply Air Temperature {C}
+    13.0,                    !- Minimum Cooling Supply Air Temperature {C}
+    0.0156,                  !- Maximum Heating Supply Air Humidity Ratio {kgWater/kgDryAir}
+    0.0077,                  !- Minimum Cooling Supply Air Humidity Ratio {kgWater/kgDryAir}
+    NoLimit,                 !- Heating Limit 
+    ,                        !- Maximum Heating Air Flow Rate {m3/s}
+    ,                        !- Maximum Sensible Heating Capacity {W}
+    NoLimit,                 !- Cooling Limit 
+    ,                        !- Maximum Cooling Air Flow Rate {m3/s}
+    ,                        !- Maximum Total Cooling Capacity {W}
+    ,                        !- Heating Availability Schedule Name 
+    ,                        !- Cooling Availability Schedule Name 
+    ConstantSensibleHeatRatio,  !- Dehumidification Control Type 
+    0.7,                     !- Cooling Sensible Heat Ratio {dimensionless}
+    60.0,                    !- Dehumidification Setpoint {percent}
+    None,                    !- Humidification Control Type 
+    30.0,                    !- Humidification Setpoint {percent}
+    None,                    !- Outdoor Air Method 
+    0.0075,                  !- Outdoor Air Flow Rate per Person {m3/s}
+    ,                        !- Outdoor Air Flow Rate per Zone Floor Area {m3/s-m2}
+    ,                        !- Outdoor Air Flow Rate per Zone {m3/s}
+    ,                        !- Design Specification Outdoor Air Object Name 
+    None,                    !- Demand Controlled Ventilation Type 
+    NoEconomizer,            !- Outdoor Air Economizer Type 
+    None,                    !- Heat Recovery Type 
+    0.7,                     !- Sensible Heat Recovery Effectiveness {dimensionless}
+    0.65;                    !- Latent Heat Recovery Effectiveness {dimensionless}
+
+  HVACTemplate:Zone:IdealLoadsAirSystem,
+    Dorm2,                   !- Zone Name 
+    Termostato,              !- Template Thermostat Name 
+    HVAC_Dorm2,              !- System Availability Schedule Name 
+    50.0,                    !- Maximum Heating Supply Air Temperature {C}
+    13.0,                    !- Minimum Cooling Supply Air Temperature {C}
+    0.0156,                  !- Maximum Heating Supply Air Humidity Ratio {kgWater/kgDryAir}
+    0.0077,                  !- Minimum Cooling Supply Air Humidity Ratio {kgWater/kgDryAir}
+    NoLimit,                 !- Heating Limit 
+    ,                        !- Maximum Heating Air Flow Rate {m3/s}
+    ,                        !- Maximum Sensible Heating Capacity {W}
+    NoLimit,                 !- Cooling Limit 
+    ,                        !- Maximum Cooling Air Flow Rate {m3/s}
+    ,                        !- Maximum Total Cooling Capacity {W}
+    ,                        !- Heating Availability Schedule Name 
+    ,                        !- Cooling Availability Schedule Name 
+    ConstantSensibleHeatRatio,  !- Dehumidification Control Type 
+    0.7,                     !- Cooling Sensible Heat Ratio {dimensionless}
+    60.0,                    !- Dehumidification Setpoint {percent}
+    None,                    !- Humidification Control Type 
+    30.0,                    !- Humidification Setpoint {percent}
+    None,                    !- Outdoor Air Method 
+    0.0075,                  !- Outdoor Air Flow Rate per Person {m3/s}
+    ,                        !- Outdoor Air Flow Rate per Zone Floor Area {m3/s-m2}
+    ,                        !- Outdoor Air Flow Rate per Zone {m3/s}
+    ,                        !- Design Specification Outdoor Air Object Name 
+    None,                    !- Demand Controlled Ventilation Type 
+    NoEconomizer,            !- Outdoor Air Economizer Type 
+    None,                    !- Heat Recovery Type 
+    0.7,                     !- Sensible Heat Recovery Effectiveness {dimensionless}
+    0.65;                    !- Latent Heat Recovery Effectiveness {dimensionless}
+
+  HVACTemplate:Zone:IdealLoadsAirSystem,
+    Dorm3,                   !- Zone Name 
+    Termostato,              !- Template Thermostat Name 
+    HVAC_Dorm3,              !- System Availability Schedule Name 
+    50.0,                    !- Maximum Heating Supply Air Temperature {C}
+    13.0,                    !- Minimum Cooling Supply Air Temperature {C}
+    0.0156,                  !- Maximum Heating Supply Air Humidity Ratio {kgWater/kgDryAir}
+    0.0077,                  !- Minimum Cooling Supply Air Humidity Ratio {kgWater/kgDryAir}
+    NoLimit,                 !- Heating Limit 
+    ,                        !- Maximum Heating Air Flow Rate {m3/s}
+    ,                        !- Maximum Sensible Heating Capacity {W}
+    NoLimit,                 !- Cooling Limit 
+    ,                        !- Maximum Cooling Air Flow Rate {m3/s}
+    ,                        !- Maximum Total Cooling Capacity {W}
+    ,                        !- Heating Availability Schedule Name 
+    ,                        !- Cooling Availability Schedule Name 
+    ConstantSensibleHeatRatio,  !- Dehumidification Control Type 
+    0.7,                     !- Cooling Sensible Heat Ratio {dimensionless}
+    60.0,                    !- Dehumidification Setpoint {percent}
+    None,                    !- Humidification Control Type 
+    30.0,                    !- Humidification Setpoint {percent}
+    None,                    !- Outdoor Air Method 
+    0.0075,                  !- Outdoor Air Flow Rate per Person {m3/s}
+    ,                        !- Outdoor Air Flow Rate per Zone Floor Area {m3/s-m2}
+    ,                        !- Outdoor Air Flow Rate per Zone {m3/s}
+    ,                        !- Design Specification Outdoor Air Object Name 
+    None,                    !- Demand Controlled Ventilation Type 
+    NoEconomizer,            !- Outdoor Air Economizer Type 
+    None,                    !- Heat Recovery Type 
+    0.7,                     !- Sensible Heat Recovery Effectiveness {dimensionless}
+    0.65;                    !- Latent Heat Recovery Effectiveness {dimensionless}
+
+  HVACTemplate:Zone:IdealLoadsAirSystem,
+    Sala,                    !- Zone Name 
+    Termostato,              !- Template Thermostat Name 
+    HVAC_Sala,               !- System Availability Schedule Name 
+    50.0,                    !- Maximum Heating Supply Air Temperature {C}
+    13.0,                    !- Minimum Cooling Supply Air Temperature {C}
+    0.0156,                  !- Maximum Heating Supply Air Humidity Ratio {kgWater/kgDryAir}
+    0.0077,                  !- Minimum Cooling Supply Air Humidity Ratio {kgWater/kgDryAir}
+    NoLimit,                 !- Heating Limit 
+    ,                        !- Maximum Heating Air Flow Rate {m3/s}
+    ,                        !- Maximum Sensible Heating Capacity {W}
+    NoLimit,                 !- Cooling Limit 
+    ,                        !- Maximum Cooling Air Flow Rate {m3/s}
+    ,                        !- Maximum Total Cooling Capacity {W}
+    ,                        !- Heating Availability Schedule Name 
+    ,                        !- Cooling Availability Schedule Name 
+    ConstantSensibleHeatRatio,  !- Dehumidification Control Type 
+    0.7,                     !- Cooling Sensible Heat Ratio {dimensionless}
+    60.0,                    !- Dehumidification Setpoint {percent}
+    None,                    !- Humidification Control Type 
+    30.0,                    !- Humidification Setpoint {percent}
+    None,                    !- Outdoor Air Method 
+    0.0075,                  !- Outdoor Air Flow Rate per Person {m3/s}
+    ,                        !- Outdoor Air Flow Rate per Zone Floor Area {m3/s-m2}
+    ,                        !- Outdoor Air Flow Rate per Zone {m3/s}
+    ,                        !- Design Specification Outdoor Air Object Name 
+    None,                    !- Demand Controlled Ventilation Type 
+    NoEconomizer,            !- Outdoor Air Economizer Type 
+    None,                    !- Heat Recovery Type 
+    0.7,                     !- Sensible Heat Recovery Effectiveness {dimensionless}
+    0.65;                    !- Latent Heat Recovery Effectiveness {dimensionless}
+
+!-   ===========  ALL OBJECTS OF GROUP: Energy Management System  ===========
+
+  EnergyManagementSystem:Sensor,
+    Temp_Dorm1,              !- Name 
+    Dorm1,                   !- Output:Variable or Output:Meter Index Key Name 
+    Zone Operative Temperature;  !- Output:Variable or Output:Meter Name 
+
+  EnergyManagementSystem:Sensor,
+    Temp_Dorm2,              !- Name 
+    Dorm2,                   !- Output:Variable or Output:Meter Index Key Name 
+    Zone Operative Temperature;  !- Output:Variable or Output:Meter Name 
+
+  EnergyManagementSystem:Sensor,
+    Temp_Dorm3,              !- Name 
+    Dorm3,                   !- Output:Variable or Output:Meter Index Key Name 
+    Zone Operative Temperature;  !- Output:Variable or Output:Meter Name 
+
+  EnergyManagementSystem:Sensor,
+    Temp_Sala,               !- Name 
+    Sala,                    !- Output:Variable or Output:Meter Index Key Name 
+    Zone Operative Temperature;  !- Output:Variable or Output:Meter Name 
+
+  EnergyManagementSystem:Sensor,
+    Ocup_Dorm1,              !- Name 
+    Dormitorio1,             !- Output:Variable or Output:Meter Index Key Name 
+    People Occupant Count;   !- Output:Variable or Output:Meter Name 
+
+  EnergyManagementSystem:Sensor,
+    Ocup_Dorm2,              !- Name 
+    Dormitorio2,             !- Output:Variable or Output:Meter Index Key Name 
+    People Occupant Count;   !- Output:Variable or Output:Meter Name 
+
+  EnergyManagementSystem:Sensor,
+    Ocup_Dorm3,              !- Name 
+    Dormitorio3,             !- Output:Variable or Output:Meter Index Key Name 
+    People Occupant Count;   !- Output:Variable or Output:Meter Name 
+
+  EnergyManagementSystem:Sensor,
+    Ocup_Sala,               !- Name 
+    Sala,                    !- Output:Variable or Output:Meter Index Key Name 
+    People Occupant Count;   !- Output:Variable or Output:Meter Name 
+
+  EnergyManagementSystem:Sensor,
+    Temp_Ext,                !- Name 
+    Environment,             !- Output:Variable or Output:Meter Index Key Name 
+    Site Outdoor Air Drybulb Temperature;  !- Output:Variable or Output:Meter Name 
+
+  EnergyManagementSystem:Sensor,
+    Tar_D1,                  !- Name 
+    Dorm1,                   !- Output:Variable or Output:Meter Index Key Name 
+    Zone Mean Air Temperature;  !- Output:Variable or Output:Meter Name 
+
+  EnergyManagementSystem:Sensor,
+    Tar_D2,                  !- Name 
+    Dorm2,                   !- Output:Variable or Output:Meter Index Key Name 
+    Zone Mean Air Temperature;  !- Output:Variable or Output:Meter Name 
+
+  EnergyManagementSystem:Sensor,
+    Tar_D3,                  !- Name 
+    Dorm3,                   !- Output:Variable or Output:Meter Index Key Name 
+    Zone Mean Air Temperature;  !- Output:Variable or Output:Meter Name 
+
+  EnergyManagementSystem:Sensor,
+    Sensor_HVACD1,           !- Name 
+    HVAC_Dorm1,              !- Output:Variable or Output:Meter Index Key Name 
+    Schedule Value;          !- Output:Variable or Output:Meter Name 
+
+  EnergyManagementSystem:Sensor,
+    Sensor_HVACD2,           !- Name 
+    HVAC_Dorm2,              !- Output:Variable or Output:Meter Index Key Name 
+    Schedule Value;          !- Output:Variable or Output:Meter Name 
+
+  EnergyManagementSystem:Sensor,
+    Sensor_HVACD3,           !- Name 
+    HVAC_Dorm3,              !- Output:Variable or Output:Meter Index Key Name 
+    Schedule Value;          !- Output:Variable or Output:Meter Name 
+
+  EnergyManagementSystem:Sensor,
+    Sensor_HVACSALA,         !- Name 
+    HVAC_Sala,               !- Output:Variable or Output:Meter Index Key Name 
+    Schedule Value;          !- Output:Variable or Output:Meter Name 
+
+  EnergyManagementSystem:Actuator,
+    Controle_HVAC_Dorm1,     !- Name 
+    HVAC_Dorm1,              !- Actuated Component Unique Name 
+    Schedule:Constant,       !- Actuated Component Type 
+    Schedule Value;          !- Actuated Component Control Type 
+
+  EnergyManagementSystem:Actuator,
+    Controle_VN_Dorm1,       !- Name 
+    VN_Dorm1,                !- Actuated Component Unique Name 
+    Schedule:Constant,       !- Actuated Component Type 
+    Schedule Value;          !- Actuated Component Control Type 
+
+  EnergyManagementSystem:Actuator,
+    Controle_HVAC_Dorm2,     !- Name 
+    HVAC_Dorm2,              !- Actuated Component Unique Name 
+    Schedule:Constant,       !- Actuated Component Type 
+    Schedule Value;          !- Actuated Component Control Type 
+
+  EnergyManagementSystem:Actuator,
+    Controle_VN_Dorm2,       !- Name 
+    VN_Dorm2,                !- Actuated Component Unique Name 
+    Schedule:Constant,       !- Actuated Component Type 
+    Schedule Value;          !- Actuated Component Control Type 
+
+  EnergyManagementSystem:Actuator,
+    Controle_HVAC_Dorm3,     !- Name 
+    HVAC_Dorm3,              !- Actuated Component Unique Name 
+    Schedule:Constant,       !- Actuated Component Type 
+    Schedule Value;          !- Actuated Component Control Type 
+
+  EnergyManagementSystem:Actuator,
+    Controle_VN_Dorm3,       !- Name 
+    VN_Dorm3,                !- Actuated Component Unique Name 
+    Schedule:Constant,       !- Actuated Component Type 
+    Schedule Value;          !- Actuated Component Control Type 
+
+  EnergyManagementSystem:Actuator,
+    Controle_HVAC_Sala,      !- Name 
+    HVAC_Sala,               !- Actuated Component Unique Name 
+    Schedule:Constant,       !- Actuated Component Type 
+    Schedule Value;          !- Actuated Component Control Type 
+
+  EnergyManagementSystem:Actuator,
+    Controle_VN_Sala,        !- Name 
+    VN_Sala,                 !- Actuated Component Unique Name 
+    Schedule:Constant,       !- Actuated Component Type 
+    Schedule Value;          !- Actuated Component Control Type 
+
+  EnergyManagementSystem:Actuator,
+    Controle_Veneziana_Dorm1,  !- Name 
+    Veneziana_Dorm1,         !- Actuated Component Unique Name 
+    Schedule:Constant,       !- Actuated Component Type 
+    Schedule Value;          !- Actuated Component Control Type 
+
+  EnergyManagementSystem:Actuator,
+    Controle_Veneziana_Dorm2,  !- Name 
+    Veneziana_Dorm2,         !- Actuated Component Unique Name 
+    Schedule:Constant,       !- Actuated Component Type 
+    Schedule Value;          !- Actuated Component Control Type 
+
+  EnergyManagementSystem:Actuator,
+    Controle_Veneziana_Dorm3,  !- Name 
+    Veneziana_Dorm3,         !- Actuated Component Unique Name 
+    Schedule:Constant,       !- Actuated Component Type 
+    Schedule Value;          !- Actuated Component Control Type 
+
+  EnergyManagementSystem:Actuator,
+    Controle_Veneziana_Sala,  !- Name 
+    Veneziana_Sala,          !- Actuated Component Unique Name 
+    Schedule:Constant,       !- Actuated Component Type 
+    Schedule Value;          !- Actuated Component Control Type 
+
+  EnergyManagementSystem:ProgramCallingManager,
+    Meu Controle HVAC,       !- Name 
+    BeginTimestepBeforePredictor,  !- EnergyPlus Model Calling Point 
+    CompDorm1Ativo,          !- Program Name 1 
+    CompDorm2Ativo,          !- Program Name 1 
+    CompDorm3Ativo,          !- Program Name 1 
+    CompSalaAtivo;           !- Program Name 1 
+
+  EnergyManagementSystem:Program,
+    CompDorm1Ativo,          !- Name 
+    SET Temp_Conf = ((Temp_Dorm1 >= 26) || (Temp_Dorm1 <= 16)),  !- Program Line 1 
+    IF (Ocup_Dorm1 > 0) && (Temp_Conf == 1),  !- Program Line 1 
+    Set Controle_HVAC_Dorm1 = 1,  !- Program Line 1 
+    Set Controle_VN_Dorm1 = 0,  !- Program Line 1 
+    Set Controle_Veneziana_Dorm1 = 1,  !- Program Line 1 
+    ELSEIF ((Ocup_Dorm1 > 0) && (Sensor_HVACD1 > 0)),  !- Program Line 1 
+    Set Controle_HVAC_Dorm1 = 1,  !- Program Line 1 
+    Set Controle_VN_Dorm1 = 0,  !- Program Line 1 
+    Set Controle_Veneziana_Dorm1 = 1,  !- Program Line 1 
+    ELSEIF ((Ocup_Sala > 0) || (Ocup_Dorm1 > 0)),  !- Program Line 1 
+    Set Controle_HVAC_Dorm1 = 0,  !- Program Line 1 
+    IF ((Temp_Ext<Tar_D1) && (Temp_Ext>19)),  !- Program Line 1 
+    Set Controle_VN_Dorm1 = 1,  !- Program Line 1 
+    Set Controle_Veneziana_Dorm1 = 0,  !- Program Line 1 
+    ELSEIF ((Temp_Ext>Tar_D1) && (Temp_Ext>19)),  !- Program Line 1 
+    Set Controle_VN_Dorm1 = 0,  !- Program Line 1 
+    Set Controle_Veneziana_Dorm1 = 1,  !- Program Line 1 
+    ELSEIF (Temp_Ext<19),    !- Program Line 1 
+    Set Controle_VN_Dorm1 = 0,  !- Program Line 1 
+    Set Controle_Veneziana_Dorm1 = 1,  !- Program Line 1 
+    ENDIF,                   !- Program Line 1 
+    ELSEIF (Ocup_Dorm1 == 0) && (Ocup_Sala == 0),  !- Program Line 1 
+    Set Controle_HVAC_Dorm1 = 0,  !- Program Line 1 
+    Set Controle_VN_Dorm1 = 0,  !- Program Line 1 
+    Set Controle_Veneziana_Dorm1 = 1,  !- Program Line 1 
+    ENDIF;                   !- Program Line 1 
+
+  EnergyManagementSystem:Program,
+    CompDorm2Ativo,          !- Name 
+    SET Temp_Conf = ((Temp_Dorm2 >= 26) || (Temp_Dorm2 <= 16)),  !- Program Line 1 
+    IF (Ocup_Dorm2 > 0) && (Temp_Conf == 1),  !- Program Line 1 
+    Set Controle_HVAC_Dorm2 = 1,  !- Program Line 1 
+    Set Controle_VN_Dorm2 = 0,  !- Program Line 1 
+    Set Controle_Veneziana_Dorm2 = 1,  !- Program Line 1 
+    ELSEIF ((Ocup_Dorm2 > 0) && (Sensor_HVACD2 > 0)),  !- Program Line 1 
+    Set Controle_HVAC_Dorm2 = 1,  !- Program Line 1 
+    Set Controle_VN_Dorm2 = 0,  !- Program Line 1 
+    Set Controle_Veneziana_Dorm2 = 1,  !- Program Line 1 
+    ELSEIF ((Ocup_Sala > 0) || (Ocup_Dorm2 > 0)),  !- Program Line 1 
+    Set Controle_HVAC_Dorm2 = 0,  !- Program Line 1 
+    IF ((Temp_Ext<Tar_D2) && (Temp_Ext>19)),  !- Program Line 1 
+    Set Controle_VN_Dorm2 = 1,  !- Program Line 1 
+    Set Controle_Veneziana_Dorm2 = 0,  !- Program Line 1 
+    ELSEIF ((Temp_Ext>Tar_D2) && (Temp_Ext>19)),  !- Program Line 1 
+    Set Controle_VN_Dorm2 = 0,  !- Program Line 1 
+    Set Controle_Veneziana_Dorm2 = 1,  !- Program Line 1 
+    ELSEIF (Temp_Ext<19),    !- Program Line 1 
+    Set Controle_VN_Dorm2 = 0,  !- Program Line 1 
+    Set Controle_Veneziana_Dorm2 = 1,  !- Program Line 1 
+    ENDIF,                   !- Program Line 1 
+    ELSEIF (Ocup_Dorm2 == 0) && (Ocup_Sala == 0),  !- Program Line 1 
+    Set Controle_HVAC_Dorm2 = 0,  !- Program Line 1 
+    Set Controle_VN_Dorm2 = 0,  !- Program Line 1 
+    Set Controle_Veneziana_Dorm2 = 1,  !- Program Line 1 
+    ENDIF;                   !- Program Line 1 
+
+  EnergyManagementSystem:Program,
+    CompDorm3Ativo,          !- Name 
+    SET Temp_Conf = ((Temp_Dorm3 >= 26) || (Temp_Dorm3 <= 16)),  !- Program Line 1 
+    IF (Ocup_Dorm3 > 0) && (Temp_Conf == 1),  !- Program Line 1 
+    Set Controle_HVAC_Dorm3 = 1,  !- Program Line 1 
+    Set Controle_VN_Dorm3 = 0,  !- Program Line 1 
+    Set Controle_Veneziana_Dorm3 = 1,  !- Program Line 1 
+    ELSEIF ((Ocup_Dorm3 > 0) && (Sensor_HVACD3 > 0)),  !- Program Line 1 
+    Set Controle_HVAC_Dorm3 = 1,  !- Program Line 1 
+    Set Controle_VN_Dorm3 = 0,  !- Program Line 1 
+    Set Controle_Veneziana_Dorm3 = 1,  !- Program Line 1 
+    ELSEIF ((Ocup_Sala > 0) || (Ocup_Dorm3 > 0)),  !- Program Line 1 
+    Set Controle_HVAC_Dorm3 = 0,  !- Program Line 1 
+    IF ((Temp_Ext<Tar_D3) && (Temp_Ext>19)),  !- Program Line 1 
+    Set Controle_VN_Dorm3 = 1,  !- Program Line 1 
+    Set Controle_Veneziana_Dorm3 = 0,  !- Program Line 1 
+    ELSEIF ((Temp_Ext>Tar_D3) && (Temp_Ext>19)),  !- Program Line 1 
+    Set Controle_VN_Dorm3 = 0,  !- Program Line 1 
+    Set Controle_Veneziana_Dorm3 = 1,  !- Program Line 1 
+    ELSEIF (Temp_Ext<19),    !- Program Line 1 
+    Set Controle_VN_Dorm3 = 0,  !- Program Line 1 
+    Set Controle_Veneziana_Dorm3 = 1,  !- Program Line 1 
+    ENDIF,                   !- Program Line 1 
+    ELSEIF (Ocup_Dorm3 == 0) && (Ocup_Sala == 0),  !- Program Line 1 
+    Set Controle_HVAC_Dorm3 = 0,  !- Program Line 1 
+    Set Controle_VN_Dorm3 = 0,  !- Program Line 1 
+    Set Controle_Veneziana_Dorm3 = 1,  !- Program Line 1 
+    ENDIF;                   !- Program Line 1 
+
+  EnergyManagementSystem:Program,
+    CompSalaAtivo,           !- Name 
+    SET Temp_Conf = ((Temp_Sala >= 26) || (Temp_Sala <= 16)),  !- Program Line 1 
+    IF ((Ocup_Sala > 0) && (Temp_Conf == 1)),  !- Program Line 1 
+    Set Controle_HVAC_Sala = 1,  !- Program Line 1 
+    Set Controle_VN_Sala = 0,  !- Program Line 1 
+    Set Controle_Veneziana_Sala = 1,  !- Program Line 1 
+    ELSEIF ((Ocup_Sala > 0) && (Sensor_HVACSALA > 0)),  !- Program Line 1 
+    Set Controle_HVAC_Sala = 1,  !- Program Line 1 
+    Set Controle_VN_Sala = 0,  !- Program Line 1 
+    Set Controle_Veneziana_Sala = 1,  !- Program Line 1 
+    ELSEIF (Ocup_Sala > 0),  !- Program Line 1 
+    IF ((Temp_Ext<Tar_D2) && (Temp_Ext>19)),  !- Program Line 1 
+    Set Controle_HVAC_Sala = 0,  !- Program Line 1 
+    Set Controle_VN_Sala = 1,  !- Program Line 1 
+    Set Controle_Veneziana_Sala = 0,  !- Program Line 1 
+    ELSEIF ((Temp_Ext>Tar_D2) && (Temp_Ext>19)),  !- Program Line 1 
+    Set Controle_HVAC_Sala = 0,  !- Program Line 1 
+    Set Controle_VN_Sala = 0,  !- Program Line 1 
+    Set Controle_Veneziana_Sala = 1,  !- Program Line 1 
+    ELSEIF (Temp_Ext<19),    !- Program Line 1 
+    Set Controle_HVAC_Sala = 0,  !- Program Line 1 
+    Set Controle_VN_Sala = 0,  !- Program Line 1 
+    Set Controle_Veneziana_Sala = 1,  !- Program Line 1 
+    ENDIF,                   !- Program Line 1 
+    ELSEIF (Ocup_Sala == 0),  !- Program Line 1 
+    Set Controle_HVAC_Sala = 0,  !- Program Line 1 
+    Set Controle_VN_Sala = 0,  !- Program Line 1 
+    Set Controle_Veneziana_Sala = 1,  !- Program Line 1 
+    ENDIF;                   !- Program Line 1 
+
+!-   ===========  ALL OBJECTS OF GROUP: Output Reporting  ===========
+
+  Output:VariableDictionary,regular;
+
+  OutputControl:Table:Style,
+    HTML,                    !- Column Separator 
+    JtoKWH;                  !- Unit Conversion 
+
+  Output:Variable,*,Site Outdoor Air Drybulb Temperature,Timestep;
+
+  Output:Variable,Dorm1,Zone Operative Temperature,Timestep;
+
+  Output:Variable,Dorm2,Zone Operative Temperature,Timestep;
+
+  Output:Variable,Dorm3,Zone Operative Temperature,Timestep;
+
+  Output:Variable,Sala,Zone Operative Temperature,Timestep;
+
+  Output:Variable,Sala,People Occupant Count,Timestep;
+
+  Output:Variable,Dormitorio1,People Occupant Count,Timestep;
+
+  Output:Variable,Dormitorio2,People Occupant Count,Timestep;
+
+  Output:Variable,Dormitorio3,People Occupant Count,Timestep;
+
+  Output:Variable,*,Zone Ideal Loads Supply Air Total Heating Energy,Timestep;
+
+  Output:Variable,*,Zone Ideal Loads Supply Air Total Cooling Energy,Timestep;
+
+  Output:Variable,*,AFN Surface Venting Window or Door Opening Factor,Timestep;
+
+  Output:Variable,*,Zone Mean Air Temperature,Timestep;
+
+  Output:Variable,*,AFN Zone Infiltration Air Change Rate,Timestep;
+
+  Output:Variable,Veneziana_Dorm1,Schedule Value,Timestep;
+
+  Output:Variable,Veneziana_Dorm2,Schedule Value,Timestep;
+
+  Output:Variable,Veneziana_Dorm3,Schedule Value,Timestep;
+
+  Output:Variable,Veneziana_Sala,Schedule Value,Timestep;
+
+  Output:Variable,Dorm1,Zone Mean Air Temperature,Timestep;
+
+  Output:Variable,Dorm2,Zone Mean Air Temperature,Timestep;
+
+  Output:Variable,Dorm3,Zone Mean Air Temperature,Timestep;
+
+  Output:Variable,VN_Dorm1,Schedule Value,Timestep;
+
+  Output:Variable,VN_Dorm2,Schedule Value,Timestep;
+
+  Output:Variable,VN_Dorm3,Schedule Value,Timestep;
+
+  Output:Variable,VN_Sala,Schedule Value,Timestep;
+
+  Output:Variable,HVAC_Dorm1,Schedule Value,Timestep;
+
+  Output:Variable,HVAC_Dorm2,Schedule Value,Timestep;
+
+  Output:Variable,HVAC_Dorm3,Schedule Value,Timestep;
+
+  Output:Variable,HVAC_Sala,Schedule Value,Timestep;
+
+  Output:Diagnostics,
+    DisplayAdvancedReportVariables,  !- Key 1 
+    DisplayExtraWarnings;    !- Key 2 
