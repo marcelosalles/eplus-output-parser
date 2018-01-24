@@ -8,6 +8,7 @@ import pandas as pd
 import csv
 import glob
 from multiprocessing import Pool
+import datetime
 
 BASE_DIR = os.getcwd()
 ZONAS = ['1', '2', '3', 'SALA']
@@ -121,7 +122,6 @@ def processar_pasta(pasta):
 
     for file in idf_files:
         
-        print(file)
         openfile = pd.read_csv(file[:-4]+'.csv')
         
         for zona in ZONAS:
@@ -134,9 +134,16 @@ def processar_pasta(pasta):
                 coolingkey = 'DORM' + zona + ' IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Cooling Energy [J](TimeStep)'
 
             # heatingIdealLoads = sum(openfile[heatingkey])
-            heatingIdealLoads = sum(openfile.get(heatingkey, []))
-            coolingIdealLoads = sum(openfile.get(coolingkey, []))
-                
+            try:
+                heatingIdealLoads = sum(openfile.get(heatingkey))
+            except:
+                heatingIdealLoads = 'NULL'
+            
+            try:
+                coolingIdealLoads = sum(openfile.get(coolingkey))
+            except:    
+                coolingIdealLoads = 'NULL'
+
             horas = entradas_conforto(openfile, zona)  # fracao de horas
                 
             dados['pasta'].append(pasta)
@@ -152,7 +159,7 @@ def processar_pasta(pasta):
             dados['timesteps'].append(horas[5])
 
     df = pd.DataFrame(dados)
-    df.to_csv('dados_{}.csv'.format(pasta))
+    df.to_csv('dados{}.csv'.format(pasta))
     print('\tDone processing folder \'{}\''.format(pasta))
 
 
@@ -165,8 +172,10 @@ if __name__ == '__main__':
         print('\t{}'.format(pasta))
 
     threaded = True
-    threaded = False
+    #threaded = False
 
+    start_time = datetime.datetime.now()
+    
     if threaded:
         num_pastas = len(pastas)
         p = Pool(num_pastas)
@@ -174,3 +183,8 @@ if __name__ == '__main__':
     else:
         for pasta in pastas:
             processar_pasta(pasta)
+
+    end_time = datetime.datetime.now()
+
+    total_time = (end_time - start_time)
+    print("O tempo total foi de ",total_time)
