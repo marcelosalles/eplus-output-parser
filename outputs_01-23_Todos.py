@@ -9,6 +9,7 @@ import csv
 import glob
 from multiprocessing import Pool
 import datetime
+import argparse
 
 BASE_DIR = os.getcwd()
 ZONAS = ['1', '2', '3', 'SALA']
@@ -164,6 +165,13 @@ def processar_pasta(pasta):
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Process output data from Energyplus.')
+    parser.add_argument('-t',
+                        action='store_true',
+                        help='run a thread pool equal to the number of eligible folders')
+    args = parser.parse_args()
+    threaded = args.t
+
     # pastas = ['BeloHorizonte', 'FozdoIguacu', 'Goiania', 'Niteroi', 'RiodeJaneiro']
     pastas = glob.glob('_*')
 
@@ -171,11 +179,8 @@ if __name__ == '__main__':
     for pasta in pastas:
         print('\t{}'.format(pasta))
 
-    threaded = True
-    #threaded = False
-
     start_time = datetime.datetime.now()
-    
+
     if threaded:
         num_pastas = len(pastas)
         p = Pool(num_pastas)
@@ -187,4 +192,4 @@ if __name__ == '__main__':
     end_time = datetime.datetime.now()
 
     total_time = (end_time - start_time)
-    print("O tempo total foi de ",total_time)
+    print("O tempo total foi de: " + str(total_time))
