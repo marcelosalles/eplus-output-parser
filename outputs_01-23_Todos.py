@@ -127,14 +127,15 @@ def processar_pasta(pasta):
         for zona in ZONAS:
             
             if zona == 'SALA':
-                heatingkey = (zona + ' IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Heating Energy [J](TimeStep)')
-                coolingkey = (zona + ' IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Cooling Energy [J](TimeStep)')
+                heatingkey = zona + ' IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Heating Energy [J](TimeStep)'
+                coolingkey = zona + ' IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Cooling Energy [J](TimeStep)'
             else:
-                heatingkey = ('DORM'+zona + ' IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Heating Energy [J](TimeStep)')
-                coolingkey = ('DORM'+zona + ' IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Cooling Energy [J](TimeStep)')
+                heatingkey = 'DORM' + zona + ' IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Heating Energy [J](TimeStep)'
+                coolingkey = 'DORM' + zona + ' IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Cooling Energy [J](TimeStep)'
 
-            heatingIdealLoads = sum(openfile[heatingkey])
-            coolingIdealLoads = sum(openfile[coolingkey])
+            # heatingIdealLoads = sum(openfile[heatingkey])
+            heatingIdealLoads = sum(openfile.get(heatingkey, []))
+            coolingIdealLoads = sum(openfile.get(coolingkey, []))
                 
             horas = entradas_conforto(openfile, zona)  # fracao de horas
                 
@@ -164,7 +165,7 @@ if __name__ == '__main__':
         print('\t{}'.format(pasta))
 
     threaded = True
-    # threaded = False
+    threaded = False
 
     if threaded:
         num_pastas = len(pastas)
