@@ -40,7 +40,7 @@ def process_folder(folder):
 
     for file in idf_files:
         
-        print('Processing file ',file, end = '\r')
+        print('Processing file ',file,'\t\t\t', end = '\r')
 
         openfile = pd.read_csv(file[:-4]+'.csv')
         
@@ -48,13 +48,13 @@ def process_folder(folder):
 
             if zone == 'SALA':
                 try:
-                    hconf = ((openfile['HVAC_SALA:Schedule Value [](TimeStep)'] == 0) & (openfile['SALA:People Occupant Count [](TimeStep)'] > 0)).value_counts()[True]
+                    hconf = ((openfile['HVAC_SALA:Schedule Value [](TimeStep)'] == 0) & (openfile['SALA:People Occupant Count [](TimeStep)'] > 0) & (openfile[zone+':Zone Operative Temperature [C](TimeStep)'] >= 18)).value_counts()[True]
                 except:
                     hconf = 0
 
             else:
                 try:
-                    hconf = ((openfile['HVAC_DORM'+zone+':Schedule Value [](TimeStep)'] == 0) & (openfile['DORMITORIO'+zone+':People Occupant Count [](TimeStep)'] > 0)).value_counts()[True]
+                    hconf = ((openfile['HVAC_DORM'+zone+':Schedule Value [](TimeStep)'] == 0) & (openfile['DORMITORIO'+zone+':People Occupant Count [](TimeStep)'] > 0) & (openfile['DORM'+zone+':Zone Operative Temperature [C](TimeStep)'] >= 18)).value_counts()[True]
                 except:
                     hconf = 0
                 
